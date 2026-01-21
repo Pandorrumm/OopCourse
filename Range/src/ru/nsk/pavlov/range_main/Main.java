@@ -15,13 +15,12 @@ public class Main {
         testIntersection(range, range3);
     }
 
-    public static void testIntersection(Range range1, Range range2){
+    public static void testIntersection(Range range1, Range range2) {
         Range intersection = range1.getIntersection(range2);
-        System.out.println("Intersection" + printRange(range1) + " and" +  printRange(range2) + " :" + (intersection != null ? printRange(intersection) : " null"));
+        System.out.println("Intersection" + printRange(range1) + " and" + printRange(range2) + " :" + (intersection != null ? printRange(intersection) : " null"));
     }
 
-    public static String printRange(Range range){
-       return  " (" + range.getFrom() + ", " +  range.getTo() + ")";
+    public static String printRange(Range range) {
+        return " (" + range.getFrom() + ", " + range.getTo() + ")";
     }
-
 }

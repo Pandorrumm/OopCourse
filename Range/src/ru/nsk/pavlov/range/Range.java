@@ -25,11 +25,11 @@ public class Range {
         this.to = to;
     }
 
-    public Range getIntersection(Range range){
+    public Range getIntersection(Range range) {
         double intersectionFrom = Math.max(this.from, range.from);
         double intersectionTo = Math.min(this.to, range.to);
 
-        if (intersectionFrom < intersectionTo){
+        if (intersectionFrom < intersectionTo) {
             return new Range(intersectionFrom, intersectionTo);
         }
 
