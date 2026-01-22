@@ -35,4 +35,18 @@ public class Range {
 
         return null;
     }
+
+    public Range[] getUnification(Range range) {
+        if (this.to < range.from || range.to < this.from) {
+            return new Range[]{
+                    new Range(Math.min(this.from, range.from), Math.min(this.to, range.to)),
+                    new Range(Math.max(this.from, range.from), Math.max(this.to, range.to)),
+            };
+        } else {
+            double unificationFrom = Math.min(this.from, range.from);
+            double unificationTo = Math.max(this.to, range.to);
+
+            return new Range[]{new Range(unificationFrom, unificationTo)};
+        }
+    }
 }
