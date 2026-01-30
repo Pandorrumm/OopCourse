@@ -21,19 +21,14 @@ public class Main {
         sortByArea(shapes);
 
         System.out.println("The maximum area of the shape: " + shapes[0].getTitle());
-        System.out.println("Area - " + shapes[0].getArea());
-        System.out.println("Width - " + shapes[0].getWidth());
-        System.out.println("Height - " + shapes[0].getHeight());
-        System.out.println("Perimeter - " + shapes[0].getPerimeter());
+        System.out.println(shapes[0]);
 
         sortByPerimeter(shapes);
 
         System.out.println();
         System.out.println("The figure with the second largest perimeter: " + shapes[1].getTitle());
-        System.out.println("Perimeter - " + shapes[1].getPerimeter());
-        System.out.println("Area - " + shapes[1].getArea());
-        System.out.println("Width - " + shapes[1].getWidth());
-        System.out.println("Height - " + shapes[1].getHeight());
+        System.out.println(shapes[1]);
+
     }
 
     public static void sortByArea(Shape[] shapes) {
@@ -45,7 +40,7 @@ public class Main {
         });
     }
 
-    public static void sortByPerimeter(Shape[] shapes){
+    public static void sortByPerimeter(Shape[] shapes) {
         Arrays.sort(shapes, new Comparator<Shape>() {
             @Override
             public int compare(Shape shape1, Shape shape2) {

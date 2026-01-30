@@ -1,5 +1,7 @@
 package ru.nsk.pavlov.shapes.shapes;
 
+import java.util.Objects;
+
 public class Triangle implements Shape {
     private double x1, y1, x2, y2, x3, y3;
 
@@ -45,5 +47,35 @@ public class Triangle implements Shape {
     @Override
     public String getTitle() {
         return "Triangle";
+    }
+
+    @Override
+    public String toString() {
+        return "Width: " + getWidth() + System.lineSeparator() + "Height: " + getHeight() + System.lineSeparator() + "Perimeter: " + getPerimeter() + System.lineSeparator() + "Area: " + getArea();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Triangle triangle = (Triangle) obj;
+        return Double.compare(triangle.x1, x1) == 0 &&
+                Double.compare(triangle.y1, y1) == 0 &&
+                Double.compare(triangle.x2, x2) == 0 &&
+                Double.compare(triangle.y2, y2) == 0 &&
+                Double.compare(triangle.x3, x3) == 0 &&
+                Double.compare(triangle.y3, y3) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                Double.hashCode(x1), Double.hashCode(y1),
+                Double.hashCode(x2), Double.hashCode(y2),
+                Double.hashCode(x3), Double.hashCode(y3));
     }
 }
