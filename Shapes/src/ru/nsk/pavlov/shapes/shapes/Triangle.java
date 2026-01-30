@@ -41,4 +41,9 @@ public class Triangle implements Shape {
 
         return sideALength + sideBLength + sideCLength;
     }
+
+    @Override
+    public String getTitle() {
+        return "Triangle";
+    }
 }

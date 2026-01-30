@@ -26,4 +26,9 @@ public class Square implements Shape {
     public double getPerimeter() {
         return 4 * sideLength;
     }
+
+    @Override
+    public String getTitle() {
+        return "Square";
+    }
 }
