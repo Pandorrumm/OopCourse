@@ -33,8 +33,9 @@ public class Circle implements Shape {
 
     @Override
     public String toString() {
-        return "Shape: Circle. " +
-                "Width: " + getWidth() +
+        return "Shape type: Circle. " +
+                "Radius: " + radius +
+                ", Width: " + getWidth() +
                 ", Height: " + getHeight() +
                 ", Perimeter: " + getPerimeter() +
                 ", Area: " + getArea();
@@ -57,10 +58,10 @@ public class Circle implements Shape {
     @Override
     public int hashCode() {
         final int prime = 37;
-        int result = 1;
+        int hash = 1;
 
-        result = prime * result + Double.hashCode(radius);
+        hash = prime * hash + Double.hashCode(radius);
 
-        return result;
+        return hash;
     }
 }

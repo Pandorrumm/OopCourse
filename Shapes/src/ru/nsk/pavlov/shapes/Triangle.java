@@ -53,9 +53,9 @@ public class Triangle implements Shape {
 
     @Override
     public double getArea() {
-        double sideALength = sideLength(x1, y1, x2, y2);
-        double sideBLength = sideLength(x2, y2, x3, y3);
-        double sideCLength = sideLength(x1, y1, x3, y3);
+        double sideALength = getSideLength(x1, y1, x2, y2);
+        double sideBLength = getSideLength(x2, y2, x3, y3);
+        double sideCLength = getSideLength(x1, y1, x3, y3);
 
         double semiPerimeter = (sideALength + sideBLength + sideCLength) / 2;
 
@@ -64,17 +64,23 @@ public class Triangle implements Shape {
 
     @Override
     public double getPerimeter() {
-        double sideALength = sideLength(x1, y1, x2, y2);
-        double sideBLength = sideLength(x2, y2, x3, y3);
-        double sideCLength = sideLength(x1, y1, x3, y3);
+        double sideALength = getSideLength(x1, y1, x2, y2);
+        double sideBLength = getSideLength(x2, y2, x3, y3);
+        double sideCLength = getSideLength(x1, y1, x3, y3);
 
         return sideALength + sideBLength + sideCLength;
     }
 
     @Override
     public String toString() {
-        return "Shape: Triangle. " +
-                "Width: " + getWidth() +
+        return "Shape type: Triangle. " +
+                "X1: " + x1 +
+                ", Y1: " + y1 +
+                ", X2: " + x2 +
+                ", Y2: " + y2 +
+                ", X3: " + x3 +
+                ", Y3: " + y3 +
+                ", Width: " + getWidth() +
                 ", Height: " + getHeight() +
                 ", Perimeter: " + getPerimeter() +
                 ", Area: " + getArea();
@@ -99,19 +105,19 @@ public class Triangle implements Shape {
     @Override
     public int hashCode() {
         final int prime = 37;
-        int result = 1;
+        int hash = 1;
 
-        result = prime * result + Double.hashCode(x1);
-        result = prime * result + Double.hashCode(y1);
-        result = prime * result + Double.hashCode(x2);
-        result = prime * result + Double.hashCode(y2);
-        result = prime * result + Double.hashCode(x3);
-        result = prime * result + Double.hashCode(y3);
+        hash = prime * hash + Double.hashCode(x1);
+        hash = prime * hash + Double.hashCode(y1);
+        hash = prime * hash + Double.hashCode(x2);
+        hash = prime * hash + Double.hashCode(y2);
+        hash = prime * hash + Double.hashCode(x3);
+        hash = prime * hash + Double.hashCode(y3);
 
-        return result;
+        return hash;
     }
 
-    private double sideLength(double x1, double y1, double x2, double y2) {
+    private static double getSideLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }

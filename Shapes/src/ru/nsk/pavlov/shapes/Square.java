@@ -33,8 +33,9 @@ public class Square implements Shape {
 
     @Override
     public String toString() {
-        return "Shape: Square. " +
-                "Width: " + getWidth() +
+        return "Shape type: Square. " +
+                "SideLength: " + sideLength +
+                ", Width: " + getWidth() +
                 ", Height: " + getHeight() +
                 ", Perimeter: " + getPerimeter() +
                 ", Area: " + getArea();
@@ -57,10 +58,10 @@ public class Square implements Shape {
     @Override
     public int hashCode() {
         final int prime = 37;
-        int result = 1;
+        int hash = 1;
 
-        result = prime * result + Double.hashCode(sideLength);
+        hash = prime * hash + Double.hashCode(sideLength);
 
-        return result;
+        return hash;
     }
 }

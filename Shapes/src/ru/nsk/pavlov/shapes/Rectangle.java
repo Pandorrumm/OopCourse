@@ -31,9 +31,9 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return "Shape: Rectangle. " +
-                "Width: " + getWidth() +
-                ", Height: " + getHeight() +
+        return "Shape type: Rectangle. " +
+                "Width: " + width +
+                ", Height: " + height +
                 ", Perimeter: " + getPerimeter() +
                 ", Area: " + getArea();
     }
@@ -55,11 +55,11 @@ public class Rectangle implements Shape {
     @Override
     public int hashCode() {
         final int prime = 37;
-        int result = 1;
+        int hash = 1;
 
-        result = prime * result + Double.hashCode(height);
-        result = prime * result + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
+        hash = prime * hash + Double.hashCode(width);
 
-        return result;
+        return hash;
     }
 }

@@ -1,7 +1,7 @@
 package ru.nsk.pavlov.shapes_main;
 
-import ru.nsk.pavlov.comparators.ShapeAreaDescendingComparator;
-import ru.nsk.pavlov.comparators.ShapePerimeterDescendingComparator;
+import ru.nsk.pavlov.comparators.ShapeAreaReverseComparator;
+import ru.nsk.pavlov.comparators.ShapePerimeterReverseComparator;
 import ru.nsk.pavlov.shapes.*;
 
 import java.util.Arrays;
@@ -21,21 +21,21 @@ public class Main {
 
         sortByAreaDescending(shapes);
 
-        System.out.println("The maximum area of the shape: ");
+        System.out.println("The shape with the maximum area:");
         System.out.println(shapes[0]);
 
         sortByPerimeterDescending(shapes);
 
         System.out.println();
-        System.out.println("The figure with the second largest perimeter: ");
+        System.out.println("The figure with the second largest perimeter:");
         System.out.println(shapes[1]);
     }
 
     public static void sortByAreaDescending(Shape[] shapes) {
-        Arrays.sort(shapes, new ShapeAreaDescendingComparator());
+        Arrays.sort(shapes, new ShapeAreaReverseComparator());
     }
 
     public static void sortByPerimeterDescending(Shape[] shapes) {
-        Arrays.sort(shapes, new ShapePerimeterDescendingComparator());
+        Arrays.sort(shapes, new ShapePerimeterReverseComparator());
     }
 }
