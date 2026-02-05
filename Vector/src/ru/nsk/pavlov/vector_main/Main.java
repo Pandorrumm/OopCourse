@@ -18,7 +18,7 @@ public class Main {
         System.out.println("Sum: " + vector1);
 
         System.out.println();
-        System.out.println("Adding vectors " + vector1 + " and " + vector3 + ": " + Vector.addTwoVectors(vector1, vector3));
+        System.out.println("Adding vectors " + vector1 + " and " + vector3 + ": " + Vector.getAdditionVectors(vector1, vector3));
 
         System.out.println();
         System.out.println("Subtract vector " + vector3 + " from vector " + vector2);
@@ -26,7 +26,7 @@ public class Main {
         System.out.println("Difference: " + vector2);
 
         System.out.println();
-        System.out.println("Subtraction vectors " + vector2 + " and " + vector3 + ": " + Vector.subtractTwoVectors(vector2, vector3));
+        System.out.println("Subtraction vectors " + vector2 + " and " + vector3 + ": " + Vector.getDifferenceVectors(vector2, vector3));
 
         System.out.println();
         System.out.println("Multiply vector " + vector5 + " by a scalar " + 2);
@@ -34,7 +34,7 @@ public class Main {
         System.out.println("The result of multiplying a vector by a scalar: " + vector5);
 
         System.out.println();
-        System.out.println("Scalar product of vectors " + vector1 + " and " + vector5 + ": " + Vector.dotProduct(vector1, vector5));
+        System.out.println("Scalar product of vectors " + vector1 + " and " + vector5 + ": " + Vector.getDotProduct(vector1, vector5));
 
         System.out.println();
         System.out.println("Reverse vector " + vector4);
