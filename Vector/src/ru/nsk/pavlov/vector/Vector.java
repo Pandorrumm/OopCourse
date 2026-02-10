@@ -44,51 +44,30 @@ public class Vector {
         stringBuilder.append('{');
 
         for (double component : components) {
-            stringBuilder.append(component);
-            stringBuilder.append(", ");
+            stringBuilder
+                    .append(component)
+                    .append(", ");
         }
 
-        if (components.length > 0) {
-            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        }
-
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         stringBuilder.append('}');
 
         return stringBuilder.toString();
     }
 
     public void add(Vector vector) {
-        int size = Math.max(components.length, vector.components.length);
+        components = Arrays.copyOf(components, Math.max(components.length, vector.components.length));
 
-        if (size > components.length) {
-            double[] newComponents = Arrays.copyOf(components, size);
-
-            for (int i = 0; i < vector.components.length; i++) {
-                newComponents[i] += vector.components[i];
-            }
-            components = newComponents;
-        } else {
-            for (int i = 0; i < vector.components.length; i++) {
-                components[i] += vector.components[i];
-            }
+        for (int i = 0; i < vector.components.length; i++) {
+            components[i] += vector.components[i];
         }
     }
 
     public void subtract(Vector vector) {
-        int size = Math.max(components.length, vector.components.length);
+        components = Arrays.copyOf(components, Math.max(components.length, vector.components.length));
 
-        if (size > components.length) {
-            double[] newComponents = Arrays.copyOf(components, size);
-
-            for (int i = 0; i < vector.components.length; i++) {
-                newComponents[i] -= vector.components[i];
-            }
-
-            components = newComponents;
-        } else {
-            for (int i = 0; i < vector.components.length; i++) {
-                components[i] -= vector.components[i];
-            }
+        for (int i = 0; i < vector.components.length; i++) {
+            components[i] -= vector.components[i];
         }
     }
 
