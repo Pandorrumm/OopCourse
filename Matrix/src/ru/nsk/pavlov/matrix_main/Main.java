@@ -62,11 +62,9 @@ public class Main {
         System.out.println("Determinant for " + matrix3 + ": " + matrix3.calculateDeterminant());
 
         System.out.println();
-        System.out.println("Multiply matrix " + matrix3 + " by a vector " + vector1);
-        matrix3.multiplyByVector(vector1);
-        System.out.println("The result of multiplying a matrix by a vector: " + matrix3);
+        System.out.println("The result of multiplying a matrix " + matrix3 + " by a vector " + vector1 + ": " + matrix3.multiplyByVector(vector1));
 
         System.out.println();
-        System.out.println("The result of multiplying a matrix " + matrix5 + " and " + matrix6 + ": " + Matrix.getMultiply(matrix5, matrix6));
+        System.out.println("The result of multiplying a matrix " + matrix5 + " and " + matrix6 + ": " + Matrix.getProduct(matrix5, matrix6));
     }
 }
