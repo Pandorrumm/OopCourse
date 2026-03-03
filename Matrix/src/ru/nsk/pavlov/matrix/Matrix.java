@@ -36,20 +36,20 @@ public class Matrix {
             throw new IllegalArgumentException("The length of the array must be greater than 0. Now it is equal to " + array.length);
         }
 
-        int maxColumnCount = 0;
+        int columnsCount = 0;
 
         for (double[] row : array) {
-            maxColumnCount = Math.max(maxColumnCount, row.length);
+            columnsCount = Math.max(columnsCount, row.length);
         }
 
-        if (maxColumnCount == 0) {
+        if (columnsCount == 0) {
             throw new IllegalArgumentException("All rows are empty");
         }
 
         rows = new Vector[array.length];
 
         for (int i = 0; i < array.length; i++) {
-            rows[i] = new Vector(maxColumnCount, array[i]);
+            rows[i] = new Vector(columnsCount, array[i]);
         }
     }
 
@@ -120,9 +120,11 @@ public class Matrix {
     }
 
     public void transpose() {
-        Vector[] transposedVectors = new Vector[getColumnsCount()];
+        int columnsCount = getColumnsCount();
 
-        for (int i = 0; i < getColumnsCount(); i++) {
+        Vector[] transposedVectors = new Vector[columnsCount];
+
+        for (int i = 0; i < columnsCount; i++) {
             transposedVectors[i] = getColumn(i);
         }
 
@@ -219,7 +221,7 @@ public class Matrix {
     }
 
     public void add(Matrix matrix) {
-        ensureEqualDimensions(this, matrix);
+        checkDimensionsEqual(this, matrix);
 
         for (int i = 0; i < rows.length; i++) {
             rows[i].add(matrix.rows[i]);
@@ -227,7 +229,7 @@ public class Matrix {
     }
 
     public void subtract(Matrix matrix) {
-        ensureEqualDimensions(this, matrix);
+        checkDimensionsEqual(this, matrix);
 
         for (int i = 0; i < rows.length; i++) {
             rows[i].subtract(matrix.rows[i]);
@@ -235,7 +237,7 @@ public class Matrix {
     }
 
     public static Matrix getSum(Matrix matrix1, Matrix matrix2) {
-        ensureEqualDimensions(matrix1, matrix2);
+        checkDimensionsEqual(matrix1, matrix2);
 
         Matrix result = new Matrix(matrix1);
         result.add(matrix2);
@@ -243,7 +245,7 @@ public class Matrix {
     }
 
     public static Matrix getDifference(Matrix matrix1, Matrix matrix2) {
-        ensureEqualDimensions(matrix1, matrix2);
+        checkDimensionsEqual(matrix1, matrix2);
 
         Matrix result = new Matrix(matrix1);
         result.subtract(matrix2);
@@ -301,10 +303,10 @@ public class Matrix {
         return Arrays.hashCode(rows);
     }
 
-    private static void ensureEqualDimensions(Matrix matrix1, Matrix matrix2) {
+    private static void checkDimensionsEqual(Matrix matrix1, Matrix matrix2) {
         if (matrix1.rows.length != matrix2.rows.length || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
-            throw new IllegalArgumentException("The matrices have incompatible sizes: " + matrix1.rows.length + " and " + matrix2.rows.length +
-                    " оr " + matrix1.getColumnsCount() + " and " + matrix2.getColumnsCount());
+            throw new IllegalArgumentException("The sizes of the matrices are not equal: " + matrix1.rows.length + " and " + matrix2.rows.length +
+                    " оr " + matrix1.getColumnsCount() + " and " + matrix2.getColumnsCount() + " Rows and columns counts must match.");
         }
     }
 }
