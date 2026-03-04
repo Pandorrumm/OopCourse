@@ -10,9 +10,12 @@ public class Main {
 
         try (BufferedReader reader = new BufferedReader(new FileReader("lesson7_arrayListHome.txt"))) {
             String line;
+
             while ((line = reader.readLine()) != null) {
                 fileLines.add(line);
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
@@ -33,7 +36,7 @@ public class Main {
         System.out.println("A list without even numbers: " + numbers1);
 
         ArrayList<Integer> numbers2 = new ArrayList<>(Arrays.asList(1, 2, 3, 2, 1, 1, 15, 10, 4, 7));
-        ArrayList<Integer> nonRepeatingNumbers = new ArrayList<>();
+        ArrayList<Integer> nonRepeatingNumbers = new ArrayList<>(numbers2.size());
 
         System.out.println();
         System.out.println("There is a list: " + numbers2);
