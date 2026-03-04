@@ -122,13 +122,13 @@ public class Matrix {
     public void transpose() {
         int columnsCount = getColumnsCount();
 
-        Vector[] transposedVectors = new Vector[columnsCount];
+        Vector[] transposedRows = new Vector[columnsCount];
 
         for (int i = 0; i < columnsCount; i++) {
-            transposedVectors[i] = getColumn(i);
+            transposedRows[i] = getColumn(i);
         }
 
-        rows = transposedVectors;
+        rows = transposedRows;
     }
 
     public void multiplyByScalar(double scalar) {
@@ -145,9 +145,9 @@ public class Matrix {
         return getDeterminant(this);
     }
 
-    private double getDeterminant(Matrix matrix) {
+    private static double getDeterminant(Matrix matrix) {
         if (matrix.rows.length == 1) {
-            return rows[0].getComponentByIndex(0);
+            return matrix.rows[0].getComponentByIndex(0);
         }
 
         if (matrix.rows.length == 2) {
@@ -305,8 +305,10 @@ public class Matrix {
 
     private static void checkDimensionsEqual(Matrix matrix1, Matrix matrix2) {
         if (matrix1.rows.length != matrix2.rows.length || matrix1.getColumnsCount() != matrix2.getColumnsCount()) {
-            throw new IllegalArgumentException("The sizes of the matrices are not equal: " + matrix1.rows.length + " and " + matrix2.rows.length +
-                    " оr " + matrix1.getColumnsCount() + " and " + matrix2.getColumnsCount() + " Rows and columns counts must match.");
+            throw new IllegalArgumentException("The sizes of the matrices are not equal: " +
+                    "First matrix: " + matrix1.rows.length + " x " + matrix1.getColumnsCount() + ", " +
+                    "Second matrix: " + matrix2.rows.length + " x " + matrix2.getColumnsCount() + ". " +
+                    "Rows and columns counts must match.");
         }
     }
 }
