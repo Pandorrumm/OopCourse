@@ -1,6 +1,7 @@
 package ru.nsk.pavlov.car_data;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class CarData {
     private String name;
@@ -30,5 +31,30 @@ public class CarData {
     @Override
     public String toString() {
         return getName() + " - " + getPrice();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        CarData carData = (CarData) obj;
+        return Objects.equals(carData.name, name) && Objects.equals(price, carData.price);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 37;
+        int hash = 1;
+
+        hash = name != null ? name.hashCode() : 0;
+        hash = prime * hash + price;
+
+        return hash;
     }
 }

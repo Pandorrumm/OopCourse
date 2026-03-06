@@ -2,7 +2,7 @@ package ru.nsk.pavlov.list;
 
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
-    private int count;
+    private final int count;
 
     public SinglyLinkedList(int count) {
         this.count = count;
@@ -11,17 +11,9 @@ public class SinglyLinkedList<T> {
     public ListItem<T> getHead() {
         return head;
     }
-//    public SinglyLinkedList(ListItem<T> head, int count) {
-//        this.head = head;
-//        this.count = count;
-//    }
 
     public void add(T item) {
         head = new ListItem<>(item, head);
-    }
-
-    public void addToEnd(T item) {
-        ListItem<T> newItem = new ListItem<>(item);
     }
 
     public int getSize() {
@@ -89,6 +81,28 @@ public class SinglyLinkedList<T> {
         return data;
     }
 
+    public boolean deleteElementByData(T data) {
+        int currentIndex = 0;
+
+        for (ListItem<T> item = head; item != null; item = item.getNext()) {
+            if (item.getData() == data) {
+                deleteElementByIndex(currentIndex--);
+                return true;
+            }
+
+            currentIndex++;
+        }
+
+        return false;
+    }
+
+    public T deleteFirstElement() {
+        ListItem<T> item = head;
+        head = head.getNext();
+
+        return item.getData();
+    }
+
     public void insertElementByIndex(int index, T data) {
         if (index == 0) {
             insertAtBegin(data);
@@ -117,8 +131,35 @@ public class SinglyLinkedList<T> {
         head = item;
     }
 
-    public boolean deleteElementByData(T data) {
-        return true;
+    public void reverse() {
+        ListItem<T> previousItem = null;
+        ListItem<T> currentItem = head;
+
+        while (currentItem != null) {
+            ListItem<T> nextItem = currentItem.getNext();
+            currentItem.setNext(previousItem);
+            previousItem = currentItem;
+            currentItem = nextItem;
+        }
+
+        head = previousItem;
+    }
+
+    public SinglyLinkedList<T> copy() {
+        SinglyLinkedList copyList = new SinglyLinkedList(count);
+
+        copyList.head = new ListItem<T>(this.head.getData());
+
+        ListItem<T> currentOriginalItem = this.head.getNext();
+        ListItem currentCopyItem = copyList.head;
+
+        while (currentOriginalItem != null) {
+            currentCopyItem.setNext(new ListItem<>(currentOriginalItem.getData()));
+            currentCopyItem = currentCopyItem.getNext();
+            currentOriginalItem = currentOriginalItem.getNext();
+        }
+
+        return copyList;
     }
 
     public void print() {

@@ -55,5 +55,27 @@ public class Main {
         carsDatas.insertElementByIndex(3, car7Data);
 
         carsDatas.print();
+
+        System.out.println();
+        System.out.println("Delete element by data " + car7Data.getName() + ": " + carsDatas.deleteElementByData(car7Data));
+
+        carsDatas.print();
+
+        System.out.println();
+        System.out.println("Delete first element " + carsDatas.deleteFirstElement());
+
+        carsDatas.print();
+
+        System.out.println();
+        System.out.println("Reverse list");
+        carsDatas.reverse();
+
+        carsDatas.print();
+
+        System.out.println();
+        System.out.println("Copy list");
+        SinglyLinkedList<CarData> copyCarsDatas = carsDatas.copy();
+
+        copyCarsDatas.print();
     }
 }
