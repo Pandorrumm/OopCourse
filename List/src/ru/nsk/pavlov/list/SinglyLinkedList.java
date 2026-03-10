@@ -1,142 +1,126 @@
 package ru.nsk.pavlov.list;
 
-public class SinglyLinkedList<T> {
-    private ListItem<T> head;
-    private final int count;
+import java.util.NoSuchElementException;
 
-    public SinglyLinkedList(int count) {
-        this.count = count;
-    }
+public class SinglyLinkedList<E> {
+    private ListItem<E> head;
+    private int count;
 
-    public ListItem<T> getHead() {
-        return head;
-    }
-
-    public void add(T item) {
-        head = new ListItem<>(item, head);
-    }
-
-    public int getSize() {
+    public int getCount() {
         return count;
     }
 
-    public T getDataFirstElement() {
+    public ListItem<E> getHead() {
+        return head;
+    }
+
+    public void add(E item) {
+        head = new ListItem<>(item, head);
+        count++;
+    }
+
+    public E getFirst() {
+        if (head == null) {
+            throw new NoSuchElementException("The list is empty");
+        }
+
         return head.getData();
     }
 
-    public T getDataByIndex(int index) {
-        if (index >= count || index < 0) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + (count - 1));
-        }
+    public E getByIndex(int index) {
+        checkIndexCorrectness(index);
 
-        int currentIndex = 0;
-        T data = null;
+        return getListItemByIndex(index).getData();
+    }
 
-        for (ListItem<T> item = head; item != null; item = item.getNext()) {
-            if (currentIndex == index) {
-                data = item.getData();
-            }
+    public void setByIndex(int index, E newData) {
+        checkIndexCorrectness(index);
 
-            currentIndex++;
-        }
+        getListItemByIndex(index).setData(newData);
+    }
+
+    public E deleteByIndex(int index) {
+        checkIndexCorrectness(index);
+
+        ListItem<E> item = getListItemByIndex(index - 1);
+        E data = item.getNext().getData();
+        item.setNext(item.getNext().getNext());
+
+        count--;
 
         return data;
     }
 
-    public void setDataByIndex(int index, T newData) {
-        if (index >= count || index < 0) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + (count - 1));
-        }
+    public boolean deleteByData(E data) {
+        for (ListItem<E> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
+            if (currentItem.getData().equals(data)) {
+                if (previousItem != null) {
+                    previousItem.setNext(currentItem.getNext());
 
-        int currentIndex = 0;
+                    count--;
+                }
 
-        for (ListItem<T> item = head; item != null; item = item.getNext()) {
-            if (currentIndex == index) {
-                item.setData(newData);
-            }
-
-            currentIndex++;
-        }
-    }
-
-    public T deleteElementByIndex(int index) {
-        if (index >= count || index < 0) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + (count - 1));
-        }
-
-        int currentIndex = 0;
-        T data = null;
-
-        for (ListItem<T> item = head; item != null; item = item.getNext()) {
-            if (currentIndex == index - 1) {
-                data = item.getNext().getData();
-                item.setNext(item.getNext().getNext());
-
-                break;
-            }
-
-            currentIndex++;
-        }
-
-        return data;
-    }
-
-    public boolean deleteElementByData(T data) {
-        int currentIndex = 0;
-
-        for (ListItem<T> item = head; item != null; item = item.getNext()) {
-            if (item.getData() == data) {
-                deleteElementByIndex(currentIndex--);
                 return true;
             }
-
-            currentIndex++;
         }
 
         return false;
     }
 
-    public T deleteFirstElement() {
-        ListItem<T> item = head;
+    public E deleteFirst() {
+        if (head == null) {
+            throw new NoSuchElementException("The list is empty");
+        }
+
+        E data = head.getData();
         head = head.getNext();
 
-        return item.getData();
+        count--;
+
+        return data;
     }
 
-    public void insertElementByIndex(int index, T data) {
+    public void insertByIndex(int index, E data) {
         if (index == 0) {
-            insertAtBegin(data);
+            addFirst(data);
         }
 
-        if (index >= count || index < 0) {
-            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + (count - 1));
+        if (index < 0 || index > count) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + count);
         }
 
-        int currentIndex = 0;
+        ListItem<E> item = getListItemByIndex(index - 1);
+        ListItem<E> newItem = new ListItem<>(data, item.getNext());
+        item.setNext(newItem);
 
-        for (ListItem<T> item = head; item != null; item = item.getNext()) {
-            if (currentIndex == index - 1) {
-                ListItem<T> newItem = new ListItem<>(data);
-                newItem.setNext(item.getNext());
-                item.setNext(newItem);
+        count++;
+    }
+
+    public void addFirst(E data) {
+        head = new ListItem<>(data, head);
+        count++;
+    }
+
+    public ListItem<E> getListItemByIndex(int index) {
+        int i = 0;
+
+        for (ListItem<E> item = head; item != null; item = item.getNext()) {
+            if (i == index) {
+                return item;
             }
 
-            currentIndex++;
+            i++;
         }
-    }
 
-    public void insertAtBegin(T data) {
-        ListItem<T> item = new ListItem<>(data);
-        item.setNext(head);
-        head = item;
+        return null;
     }
 
     public void reverse() {
-        ListItem<T> previousItem = null;
-        ListItem<T> currentItem = head;
+        ListItem<E> previousItem = null;
+        ListItem<E> currentItem = head;
 
         while (currentItem != null) {
-            ListItem<T> nextItem = currentItem.getNext();
+            ListItem<E> nextItem = currentItem.getNext();
             currentItem.setNext(previousItem);
             previousItem = currentItem;
             currentItem = nextItem;
@@ -145,13 +129,13 @@ public class SinglyLinkedList<T> {
         head = previousItem;
     }
 
-    public SinglyLinkedList<T> copy() {
-        SinglyLinkedList copyList = new SinglyLinkedList(count);
+    public SinglyLinkedList<E> copy() {
+        SinglyLinkedList<E> copyList = new SinglyLinkedList<>();
 
-        copyList.head = new ListItem<T>(this.head.getData());
+        copyList.head = new ListItem<E>(head.getData());
 
-        ListItem<T> currentOriginalItem = this.head.getNext();
-        ListItem currentCopyItem = copyList.head;
+        ListItem<E> currentOriginalItem = head.getNext();
+        ListItem<E> currentCopyItem = copyList.head;
 
         while (currentOriginalItem != null) {
             currentCopyItem.setNext(new ListItem<>(currentOriginalItem.getData()));
@@ -162,9 +146,23 @@ public class SinglyLinkedList<T> {
         return copyList;
     }
 
-    public void print() {
-        for (ListItem<T> item = head; item != null; item = item.getNext()) {
-            System.out.println(item.getData());
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (ListItem<E> item = head; item != null; item = item.getNext()) {
+            stringBuilder.append(item.getData())
+                    .append("\n");
+        }
+
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+
+        return stringBuilder.toString();
+    }
+
+    private void checkIndexCorrectness(int index) {
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + (count - 1));
         }
     }
 }
