@@ -10,10 +10,6 @@ public class SinglyLinkedList<E> {
         return count;
     }
 
-    public ListItem<E> getHead() {
-        return head;
-    }
-
     public void add(E item) {
         head = new ListItem<>(item, head);
         count++;
@@ -28,23 +24,26 @@ public class SinglyLinkedList<E> {
     }
 
     public E getByIndex(int index) {
-        checkIndexCorrectness(index);
+        checkIndex(index);
 
         return getListItemByIndex(index).getData();
     }
 
-    public void setByIndex(int index, E newData) {
-        checkIndexCorrectness(index);
+    public E setByIndex(int index, E newData) {
+        checkIndex(index);
 
+        E data = getListItemByIndex(index).getData();
         getListItemByIndex(index).setData(newData);
+
+        return data;
     }
 
     public E deleteByIndex(int index) {
-        checkIndexCorrectness(index);
+        checkIndex(index);
 
-        ListItem<E> item = getListItemByIndex(index - 1);
-        E data = item.getNext().getData();
-        item.setNext(item.getNext().getNext());
+        ListItem<E> previousItem = getListItemByIndex(index - 1);
+        E data = previousItem.getNext().getData();
+        previousItem.setNext(previousItem.getNext().getNext());
 
         count--;
 
@@ -52,14 +51,19 @@ public class SinglyLinkedList<E> {
     }
 
     public boolean deleteByData(E data) {
+        if (data == null) {
+            throw new IllegalArgumentException("Data must not be null");
+        }
+
         for (ListItem<E> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
             if (currentItem.getData().equals(data)) {
-                if (previousItem != null) {
+                if (previousItem == null) {
+                    head = currentItem.getNext();
+                } else {
                     previousItem.setNext(currentItem.getNext());
-
-                    count--;
                 }
 
+                count--;
                 return true;
             }
         }
@@ -81,17 +85,18 @@ public class SinglyLinkedList<E> {
     }
 
     public void insertByIndex(int index, E data) {
-        if (index == 0) {
-            addFirst(data);
-        }
-
         if (index < 0 || index > count) {
             throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + count);
         }
 
-        ListItem<E> item = getListItemByIndex(index - 1);
-        ListItem<E> newItem = new ListItem<>(data, item.getNext());
-        item.setNext(newItem);
+        if (index == 0) {
+            addFirst(data);
+
+            return;
+        }
+
+        ListItem<E> previousItem = getListItemByIndex(index - 1);
+        previousItem.setNext(new ListItem<>(data, previousItem.getNext()));
 
         count++;
     }
@@ -101,18 +106,14 @@ public class SinglyLinkedList<E> {
         count++;
     }
 
-    public ListItem<E> getListItemByIndex(int index) {
-        int i = 0;
+    private ListItem<E> getListItemByIndex(int index) {
+        ListItem<E> item = head;
 
-        for (ListItem<E> item = head; item != null; item = item.getNext()) {
-            if (i == index) {
-                return item;
-            }
-
-            i++;
+        for (int i = 0; i < index; i++) {
+            item = item.getNext();
         }
 
-        return null;
+        return item;
     }
 
     public void reverse() {
@@ -132,15 +133,23 @@ public class SinglyLinkedList<E> {
     public SinglyLinkedList<E> copy() {
         SinglyLinkedList<E> copyList = new SinglyLinkedList<>();
 
-        copyList.head = new ListItem<E>(head.getData());
+        if (head == null) {
+            return copyList;
+        }
+
+        copyList.head = new ListItem<>(head.getData());
+        copyList.count = 1;
 
         ListItem<E> currentOriginalItem = head.getNext();
         ListItem<E> currentCopyItem = copyList.head;
 
         while (currentOriginalItem != null) {
             currentCopyItem.setNext(new ListItem<>(currentOriginalItem.getData()));
+
             currentCopyItem = currentCopyItem.getNext();
             currentOriginalItem = currentOriginalItem.getNext();
+
+            copyList.count++;
         }
 
         return copyList;
@@ -150,17 +159,20 @@ public class SinglyLinkedList<E> {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
 
+        stringBuilder.append('[');
+
         for (ListItem<E> item = head; item != null; item = item.getNext()) {
             stringBuilder.append(item.getData())
-                    .append("\n");
+                    .append(", ");
         }
 
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append(']');
 
         return stringBuilder.toString();
     }
 
-    private void checkIndexCorrectness(int index) {
+    private void checkIndex(int index) {
         if (index < 0 || index >= count) {
             throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + (count - 1));
         }

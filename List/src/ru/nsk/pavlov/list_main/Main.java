@@ -31,8 +31,7 @@ public class Main {
         System.out.println("Get data by index 1: " + carsDatas.getByIndex(1).getName() + " - " + carsDatas.getByIndex(1).getPrice());
 
         System.out.println();
-        System.out.println("Set data by index 1 " + car5Data.getName());
-        carsDatas.setByIndex(1, car5Data);
+        System.out.println("Set data by index 1 " + car5Data.getName() + ", old data: " + carsDatas.setByIndex(1, car5Data));
 
         System.out.println(carsDatas);
 
