@@ -10,11 +10,6 @@ public class SinglyLinkedList<E> {
         return count;
     }
 
-    public void add(E item) {
-        head = new ListItem<>(item, head);
-        count++;
-    }
-
     public E getFirst() {
         if (head == null) {
             throw new NoSuchElementException("The list is empty");
@@ -32,8 +27,10 @@ public class SinglyLinkedList<E> {
     public E setByIndex(int index, E newData) {
         checkIndex(index);
 
-        E data = getListItemByIndex(index).getData();
-        getListItemByIndex(index).setData(newData);
+        ListItem<E> item = getListItemByIndex(index);
+
+        E data = item.getData();
+        item.setData(newData);
 
         return data;
     }
@@ -41,20 +38,23 @@ public class SinglyLinkedList<E> {
     public E deleteByIndex(int index) {
         checkIndex(index);
 
+        if (index == 0) {
+            E data = head.getData();
+            head = head.getNext();
+
+            count--;
+            return data;
+        }
+
         ListItem<E> previousItem = getListItemByIndex(index - 1);
         E data = previousItem.getNext().getData();
         previousItem.setNext(previousItem.getNext().getNext());
 
         count--;
-
         return data;
     }
 
     public boolean deleteByData(E data) {
-        if (data == null) {
-            throw new IllegalArgumentException("Data must not be null");
-        }
-
         for (ListItem<E> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
             if (currentItem.getData().equals(data)) {
                 if (previousItem == null) {
@@ -91,7 +91,6 @@ public class SinglyLinkedList<E> {
 
         if (index == 0) {
             addFirst(data);
-
             return;
         }
 
@@ -138,7 +137,7 @@ public class SinglyLinkedList<E> {
         }
 
         copyList.head = new ListItem<>(head.getData());
-        copyList.count = 1;
+        copyList.count = count;
 
         ListItem<E> currentOriginalItem = head.getNext();
         ListItem<E> currentCopyItem = copyList.head;
@@ -148,8 +147,6 @@ public class SinglyLinkedList<E> {
 
             currentCopyItem = currentCopyItem.getNext();
             currentOriginalItem = currentOriginalItem.getNext();
-
-            copyList.count++;
         }
 
         return copyList;
@@ -157,16 +154,25 @@ public class SinglyLinkedList<E> {
 
     @Override
     public String toString() {
+        if (head == null) {
+            return "[]";
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append('[');
 
-        for (ListItem<E> item = head; item != null; item = item.getNext()) {
-            stringBuilder.append(item.getData())
-                    .append(", ");
+        ListItem<E> item = head;
+
+        while (item != null) {
+            stringBuilder.append(item.getData());
+            item = item.getNext();
+
+            if (item != null) {
+                stringBuilder.append(", ");
+            }
         }
 
-        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         stringBuilder.append(']');
 
         return stringBuilder.toString();

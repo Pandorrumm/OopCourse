@@ -14,10 +14,10 @@ public class Main {
         Car car7Data = new Car("NIVA", 65);
 
         SinglyLinkedList<Car> carsDatas = new SinglyLinkedList<>();
-        carsDatas.add(car1Data);
-        carsDatas.add(car2Data);
-        carsDatas.add(car3Data);
-        carsDatas.add(car4Data);
+        carsDatas.addFirst(car1Data);
+        carsDatas.addFirst(car2Data);
+        carsDatas.addFirst(car3Data);
+        carsDatas.addFirst(car4Data);
 
         System.out.println(carsDatas);
 
