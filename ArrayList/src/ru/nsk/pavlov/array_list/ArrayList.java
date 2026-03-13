@@ -12,6 +12,8 @@ public class ArrayList<E> implements List<E> {
             throw new IllegalArgumentException("Capacity cannot be negative: " + size);
         }
 
+
+        //noinspection unchecked
         items = (E[]) new Object[initialCapacity];
 
         size = 0;
@@ -35,7 +37,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new MyListIterator();
     }
 
     @Override
@@ -49,12 +51,28 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean add(E element) {
-        if (size == items.length) {
+    public void add(int index, E element) {
+        checkIndex(index);
+
+        if (size >= items.length) {
             increaseCapacity(items.length * 2);
         }
 
-        items[size + 1] = element;
+        items[size] = element;
+
+        size++;
+        modCount++;
+    }
+
+    @Override
+    public boolean add(E element) {
+        if (size >= items.length) {
+            increaseCapacity(items.length * 2);
+        }
+
+        items[size] = element;
+
+        size++;
         modCount++;
 
         return true;
@@ -75,17 +93,35 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        if (c == null) {
+            throw new NullPointerException("Collection cannot be null");
+        }
+
+        for (Object element : c) {
+            if (!contains(element)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        return false;
+        if (c.isEmpty()) {
+            return false;
+        }
+
+        for (E element : c) {
+            add(element);
+        }
+
+        return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        return false;
+        return true;
     }
 
     @Override
@@ -126,20 +162,6 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public void add(int index, E element) {
-        checkIndex(index);
-
-        if (size >= items.length) {
-            increaseCapacity(items.length * 2);
-        }
-
-        items[size] = element;
-
-        size++;
-        modCount++;
-    }
-
-    @Override
     public E remove(int index) {
         checkIndex(index);
 
@@ -159,12 +181,40 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        if (o == null) {
+            for (int i = 0; i < size; i++) {
+                if (items[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (o.equals(items[i])) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        if (o == null) {
+            for (int i = size - 1; i >= 0; i--) {
+                if (items[i] == null) {
+                    return i;
+                }
+            }
+        } else {
+            for (int i = size - 1; i >= 0; i--) {
+                if (o.equals(items[i])) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
     }
 
     @Override
