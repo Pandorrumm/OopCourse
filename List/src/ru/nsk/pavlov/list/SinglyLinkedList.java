@@ -39,11 +39,7 @@ public class SinglyLinkedList<E> {
         checkIndex(index);
 
         if (index == 0) {
-            E data = head.getData();
-            head = head.getNext();
-
-            count--;
-            return data;
+            return deleteFirst();
         }
 
         ListItem<E> previousItem = getListItemByIndex(index - 1);
@@ -56,6 +52,10 @@ public class SinglyLinkedList<E> {
 
     public boolean deleteByData(E data) {
         for (ListItem<E> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
+            if (currentItem.getData() == null) {
+                continue;
+            }
+
             if (currentItem.getData().equals(data)) {
                 if (previousItem == null) {
                     head = currentItem.getNext();
@@ -160,17 +160,18 @@ public class SinglyLinkedList<E> {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append('[');
+        stringBuilder
+                .append('[')
+                .append(head.getData());
 
-        ListItem<E> item = head;
+        ListItem<E> item = head.getNext();
 
         while (item != null) {
-            stringBuilder.append(item.getData());
-            item = item.getNext();
+            stringBuilder
+                    .append(", ")
+                    .append(item.getData());
 
-            if (item != null) {
-                stringBuilder.append(", ");
-            }
+            item = item.getNext();
         }
 
         stringBuilder.append(']');
