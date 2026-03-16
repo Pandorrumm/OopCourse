@@ -52,11 +52,15 @@ public class SinglyLinkedList<E> {
 
     public boolean deleteByData(E data) {
         for (ListItem<E> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
-            if (currentItem.getData() == null) {
-                continue;
+            boolean matches;
+
+            if (data == null) {
+                matches = (currentItem.getData() == null);
+            } else {
+                matches = data.equals(currentItem.getData());
             }
 
-            if (currentItem.getData().equals(data)) {
+            if (matches) {
                 if (previousItem == null) {
                     head = currentItem.getNext();
                 } else {
@@ -154,10 +158,6 @@ public class SinglyLinkedList<E> {
 
     @Override
     public String toString() {
-        if (head == null) {
-            return "[]";
-        }
-
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder
