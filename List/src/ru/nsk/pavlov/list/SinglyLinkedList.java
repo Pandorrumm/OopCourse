@@ -1,6 +1,7 @@
 package ru.nsk.pavlov.list;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SinglyLinkedList<E> {
     private ListItem<E> head;
@@ -52,15 +53,7 @@ public class SinglyLinkedList<E> {
 
     public boolean deleteByData(E data) {
         for (ListItem<E> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
-            boolean matches;
-
-            if (data == null) {
-                matches = (currentItem.getData() == null);
-            } else {
-                matches = data.equals(currentItem.getData());
-            }
-
-            if (matches) {
+            if (Objects.equals(currentItem.getData(), data)) {
                 if (previousItem == null) {
                     head = currentItem.getNext();
                 } else {
@@ -158,20 +151,25 @@ public class SinglyLinkedList<E> {
 
     @Override
     public String toString() {
+        if (count == 0) {
+            return "[]";
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('[');
 
-        stringBuilder
-                .append('[')
-                .append(head.getData());
-
-        ListItem<E> item = head.getNext();
+        ListItem<E> item = head;
 
         while (item != null) {
             stringBuilder
-                    .append(", ")
-                    .append(item.getData());
+                    .append(item.getData())
+                    .append(", ");
 
             item = item.getNext();
+        }
+
+        if (stringBuilder.length() > 2) {
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
         }
 
         stringBuilder.append(']');
