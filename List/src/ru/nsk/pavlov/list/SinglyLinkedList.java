@@ -55,7 +55,7 @@ public class SinglyLinkedList<E> {
         for (ListItem<E> currentItem = head, previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
             if (Objects.equals(currentItem.getData(), data)) {
                 if (previousItem == null) {
-                    head = currentItem.getNext();
+                    head = head.getNext();
                 } else {
                     previousItem.setNext(currentItem.getNext());
                 }
