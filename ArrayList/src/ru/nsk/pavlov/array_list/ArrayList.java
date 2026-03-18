@@ -12,7 +12,6 @@ public class ArrayList<E> implements List<E> {
             throw new IllegalArgumentException("Capacity cannot be negative: " + size);
         }
 
-
         //noinspection unchecked
         items = (E[]) new Object[initialCapacity];
 
@@ -32,7 +31,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return indexOf(o) != -1;
     }
 
     @Override
@@ -42,23 +41,41 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        return Arrays.copyOf(items, size, Object[].class);
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        return null;
+        if (a == null) {
+            throw new NullPointerException("Destination array cannot be null.");
+        }
+
+        if (a.length < size) {
+            //noinspection unchecked
+            return (T[]) Arrays.copyOf(items, size, a.getClass());
+        }
+
+        for (int i = 0; i < size; i++) {
+            //noinspection unchecked
+            a[i] = (T) items[i];
+        }
+
+        if (a.length > size) {
+            a[size] = null;
+        }
+
+        return a;
     }
 
     @Override
     public void add(int index, E element) {
         checkIndex(index);
 
-        if (size >= items.length) {
-            increaseCapacity(items.length * 2);
-        }
+        ensureCapacity(size + 1);
 
-        items[size] = element;
+        System.arraycopy(items, index, items, index + 1, size - index);
+
+        items[index] = element;
 
         size++;
         modCount++;
@@ -93,9 +110,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        if (c == null) {
-            throw new NullPointerException("Collection cannot be null");
-        }
+        checkCollection(c);
 
         for (Object element : c) {
             if (!contains(element)) {
@@ -108,6 +123,8 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
+        checkCollection(c);
+
         if (c.isEmpty()) {
             return false;
         }
@@ -121,17 +138,56 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
+        checkCollection(c);
+
+        checkIndex(index);
+
+        if (c.isEmpty()) {
+            return false;
+        }
+
+        int insertIndex = index;
+
+        for (E element : c) {
+            add(insertIndex, element);
+            insertIndex++;
+        }
+
         return true;
     }
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        checkCollection(c);
+
+        boolean isDone = false;
+
+        while (iterator().hasNext()) {
+            if (c.contains(iterator().next())) {
+                iterator().remove();
+
+                isDone = true;
+            }
+        }
+
+        return isDone;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        checkCollection(c);
+
+        boolean isDone = false;
+
+        while (iterator().hasNext()) {
+            if (!c.contains(iterator().next())) {
+                iterator().remove();
+
+                isDone = true;
+            }
+        }
+
+        return isDone;
     }
 
     @Override
@@ -238,8 +294,14 @@ public class ArrayList<E> implements List<E> {
         }
     }
 
+    private void checkCollection(Collection<?> c) {
+        if (c == null) {
+            throw new NullPointerException("Collection cannot be null");
+        }
+    }
+
     private void increaseCapacity(int newCapacity) {
-        items = Arrays.copyOf(items, items.length * 2);
+        items = Arrays.copyOf(items, newCapacity);
     }
 
     private class MyListIterator implements Iterator<E> {
@@ -293,14 +355,14 @@ public class ArrayList<E> implements List<E> {
             return "[]";
         }
 
-        StringBuilder sb = new StringBuilder("[");
+        StringBuilder stringBuilder = new StringBuilder("[");
 
         for (int i = 0; i < size - 1; i++) {
-            sb.append(items[i]).append(", ");
+            stringBuilder.append(items[i]).append(", ");
         }
 
-        sb.append(items[size - 1]).append("]");
+        stringBuilder.append(items[size - 1]).append("]");
 
-        return sb.toString();
+        return stringBuilder.toString();
     }
 }
