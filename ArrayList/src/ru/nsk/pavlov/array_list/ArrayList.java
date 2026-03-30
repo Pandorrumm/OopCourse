@@ -33,7 +33,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new ListIterator();
+        return new ArrayListIterator();
     }
 
     @Override
@@ -109,7 +109,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        requireNonNull(c);
+        Objects.requireNonNull(c, "Collection cannot be null");
 
         for (Object element : c) {
             if (!contains(element)) {
@@ -127,7 +127,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-        requireNonNull(c);
+        Objects.requireNonNull(c, "Collection cannot be null");
 
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index " + index + " is out of bounds. Valid range: from 0 to " + size);
@@ -137,18 +137,16 @@ public class ArrayList<E> implements List<E> {
             return false;
         }
 
-        int newElementCount = c.toArray().length;
+        int newElementsCount = c.size();
 
-        if (size + newElementCount > items.length) {
-            increaseCapacity();
-        }
+        ensureCapacity(size + newElementsCount);
 
-        System.arraycopy(items, index, items, index + newElementCount, size - index);
+        System.arraycopy(items, index, items, index + newElementsCount, size - index);
 
         //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(c.toArray(), 0, items, index, newElementCount);
+        System.arraycopy(c.toArray(), 0, items, index, newElementsCount);
 
-        size += newElementCount;
+        size += newElementsCount;
         modCount++;
 
         return true;
@@ -156,7 +154,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        requireNonNull(c);
+        Objects.requireNonNull(c, "Collection cannot be null");
 
         boolean isModified = false;
         int writeIndex = 0;
@@ -173,9 +171,7 @@ public class ArrayList<E> implements List<E> {
         }
 
         if (isModified) {
-            for (int i = writeIndex; i < size; i++) {
-                items[i] = null;
-            }
+            Arrays.fill(items, writeIndex, size, null);
 
             size = writeIndex;
             modCount++;
@@ -186,7 +182,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        requireNonNull(c);
+        Objects.requireNonNull(c, "Collection cannot be null");
 
         boolean isModified = false;
         int writeIndex = 0;
@@ -203,9 +199,7 @@ public class ArrayList<E> implements List<E> {
         }
 
         if (isModified) {
-            for (int i = writeIndex; i < size; i++) {
-                items[i] = null;
-            }
+            Arrays.fill(items, writeIndex, size, null);
 
             size = writeIndex;
             modCount++;
@@ -284,12 +278,12 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public java.util.ListIterator<E> listIterator() {
+    public ListIterator<E> listIterator() {
         return null;
     }
 
     @Override
-    public java.util.ListIterator<E> listIterator(int index) {
+    public ListIterator<E> listIterator(int index) {
         return null;
     }
 
@@ -304,24 +298,22 @@ public class ArrayList<E> implements List<E> {
         }
     }
 
-    private void requireNonNull(Collection<?> c) {
-        if (c == null) {
-            throw new NullPointerException("Collection cannot be null");
-        }
-    }
-
     private void increaseCapacity() {
-        items = Arrays.copyOf(items, items.length * 2);
+        int newCapacity = items.length == 0 ? 1 : items.length * 2;
+
+        items = Arrays.copyOf(items, newCapacity);
     }
 
-    private class ListIterator implements Iterator<E> {
+    private class ArrayListIterator implements Iterator<E> {
         private int currentIndex = -1;
         private final int expectedModCount = modCount;
 
+        @Override
         public boolean hasNext() {
             return currentIndex + 1 < size;
         }
 
+        @Override
         public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException("No more elements in the collection");
@@ -338,7 +330,7 @@ public class ArrayList<E> implements List<E> {
 
     public void ensureCapacity(int minCapacity) {
         if (minCapacity > items.length) {
-            increaseCapacity();
+            items = Arrays.copyOf(items, minCapacity);
         }
     }
 
