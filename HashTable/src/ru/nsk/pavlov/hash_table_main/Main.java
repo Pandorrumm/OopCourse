@@ -22,10 +22,11 @@ public class Main {
 
         System.out.println();
         System.out.println("Remove element Mazda: " + hashTable.remove("Mazda"));
+
+        System.out.println();
         System.out.println("Contains element Mazda: " + hashTable.contains("Mazda"));
 
         System.out.println();
         System.out.println(hashTable);
-
     }
 }
