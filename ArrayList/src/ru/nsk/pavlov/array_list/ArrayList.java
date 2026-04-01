@@ -143,9 +143,11 @@ public class ArrayList<E> implements List<E> {
 
         System.arraycopy(items, index, items, index + newElementsCount, size - index);
 
+        int currentIndex = index;
+
         for (E element : c) {
-            items[index] = element;
-            index++;
+            items[currentIndex] = element;
+            currentIndex++;
         }
 
         size += newElementsCount;
