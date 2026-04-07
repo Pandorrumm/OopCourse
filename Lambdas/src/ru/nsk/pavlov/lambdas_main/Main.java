@@ -1,7 +1,5 @@
 package ru.nsk.pavlov.lambdas_main;
 
-import ru.nsk.pavlov.lambdas_person.Person;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -27,41 +25,41 @@ public class Main {
                 .distinct()
                 .toList();
 
-        String uniqueNames = persons.stream()
+        System.out.println("Список уникальных имён:");
+        System.out.println(uniqueNamesList);
+
+        String uniqueNamesString = persons.stream()
                 .map(Person::name)
                 .distinct()
                 .collect(Collectors.joining(", ", "Имена: ", "."));
 
-        double averageAge = persons.stream()
+        System.out.println();
+        System.out.println(uniqueNamesString);
+
+        double averageAgeOfPersonsUnder18 = persons.stream()
                 .filter(p -> p.age() < 18)
                 .mapToInt(Person::age)
                 .average()
-                .orElse(0.0);
+                .orElse(Double.NaN);
 
-        Map<String, Double> averageAgeByName = persons.stream()
+        System.out.println();
+        System.out.println("Средний возраст людей младше 18: " + averageAgeOfPersonsUnder18);
+
+        Map<String, Double> averageAgesByNames = persons.stream()
                 .collect(Collectors.groupingBy(
                         Person::name,
                         Collectors.averagingInt(Person::age)
                 ));
+
+        System.out.println();
+        System.out.println("Map, в котором ключи – имена, а значения – средний возраст:");
+        System.out.println(averageAgesByNames);
 
         List<String> namesFrom20To45 = persons.stream()
                 .filter(p -> p.age() >= 20 && p.age() <= 45)
                 .sorted(Comparator.comparingInt(Person::age).reversed())
                 .map(Person::name)
                 .toList();
-
-        System.out.println("Список уникальных имён:");
-        System.out.println(uniqueNamesList);
-
-        System.out.println();
-        System.out.println(uniqueNames);
-
-        System.out.println();
-        System.out.println("Средний возраст людей младше 18: " + averageAge);
-
-        System.out.println();
-        System.out.println("Map, в котором ключи – имена, а значения – средний возраст:");
-        System.out.println(averageAgeByName);
 
         System.out.println();
         System.out.println("Имена людей от 20 до 45 лет в порядке убывания возраста:");
