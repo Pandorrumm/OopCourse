@@ -4,10 +4,12 @@ import ru.nsk.pavlov.tree_node.TreeNode;
 
 public class BinarySearchTree<E extends Comparable<E>> {
     private TreeNode<E> root;
+    private int nodeCount;
 
     public void insert(E x) {
         if (root == null) {
             root = new TreeNode<>(x);
+            nodeCount++;
             return;
         }
 
@@ -17,6 +19,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
             if (x.compareTo(current.getData()) < 0) {
                 if (current.getLeft() == null) {
                     current.setLeft(new TreeNode<>(x));
+
+                    nodeCount++;
+
                     return;
                 } else {
                     current = current.getLeft();
@@ -24,6 +29,9 @@ public class BinarySearchTree<E extends Comparable<E>> {
             } else {
                 if (current.getRight() == null) {
                     current.setRight(new TreeNode<>(x));
+
+                    nodeCount++;
+
                     return;
                 } else {
                     current = current.getRight();
@@ -60,22 +68,37 @@ public class BinarySearchTree<E extends Comparable<E>> {
         TreeNode<E> parent = findParent(nodeToDelete);
 
         if (nodeToDelete.getLeft() == null && nodeToDelete.getRight() == null) {
-            if (parent == null) {
-                root = null;
-            } else if (parent.getLeft() == nodeToDelete) {
-                parent.setLeft(null);
-            } else {
-                parent.setRight(null);
-            }
+            replaceChild(parent, nodeToDelete, null);
         } else if (nodeToDelete.getLeft() == null) {
-
+            replaceChild(parent, nodeToDelete, nodeToDelete.getRight());
         } else if (nodeToDelete.getRight() == null) {
-
+            replaceChild(parent, nodeToDelete, nodeToDelete.getLeft());
         } else {
+            TreeNode<E> minNode = findMinimumNode(nodeToDelete.getRight());
+            TreeNode<E> minNodeParent = findParent(minNode);
 
+            if (minNode != nodeToDelete.getRight()) {
+                if (minNodeParent.getLeft() == minNode) {
+                    minNodeParent.setLeft(minNode.getRight());
+                } else {
+                    minNodeParent.setRight(minNode.getRight());
+                }
+
+                minNode.setRight(nodeToDelete.getRight());
+            }
+
+            minNode.setLeft(nodeToDelete.getLeft());
+
+            replaceChild(parent, nodeToDelete, minNode);
         }
 
+        nodeCount--;
+
         return true;
+    }
+
+    public int getNodeCount() {
+        return nodeCount;
     }
 
     private TreeNode<E> findParent(TreeNode<E> target) {
@@ -100,6 +123,24 @@ public class BinarySearchTree<E extends Comparable<E>> {
         }
 
         return null;
+    }
+
+    private TreeNode<E> findMinimumNode(TreeNode<E> node) {
+        while (node.getLeft() != null) {
+            node = node.getLeft();
+        }
+
+        return node;
+    }
+
+    private void replaceChild(TreeNode<E> parent, TreeNode<E> oldChild, TreeNode<E> newChild) {
+        if (parent == null) {
+            root = newChild;
+        } else if (parent.getLeft() == oldChild) {
+            parent.setLeft(newChild);
+        } else {
+            parent.setRight(newChild);
+        }
     }
 
     public void printTree() {

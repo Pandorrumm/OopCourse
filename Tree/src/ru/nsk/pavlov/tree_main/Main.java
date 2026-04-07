@@ -18,15 +18,23 @@ public class Main {
         tree.printTree();
 
         System.out.println();
+        System.out.println("Node count: " + tree.getNodeCount());
+
+        System.out.println();
         System.out.println("Find node with the value 20");
 
         TreeNode<Integer> findNode = tree.findNode(20);
 
-        if (findNode != null){
+        if (findNode != null) {
             System.out.println("The node with the value 20 has been found!");
             System.out.println("Note data: " + findNode.getData());
-        } else{
+        } else {
             System.out.println("Node not found");
         }
+
+        System.out.println();
+        System.out.println("Delete node with the value 5: " + tree.delete(5));
+        System.out.println("Node count: " + tree.getNodeCount());
+        tree.printTree();
     }
 }
