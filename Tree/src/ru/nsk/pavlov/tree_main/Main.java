@@ -36,5 +36,22 @@ public class Main {
         System.out.println("Delete node with the value 5: " + tree.delete(5));
         System.out.println("Node count: " + tree.getNodeCount());
         tree.printTree();
+        System.out.println();
+
+        System.out.println();
+        System.out.println("Preorder tree depth first search with recursion:");
+        tree.preOrderRecursiveSearch();
+        System.out.println();
+
+        System.out.println();
+        System.out.println("Preorder tree depth first search:");
+        tree.preOrderSearch();
+        System.out.println();
+
+
+        System.out.println();
+        System.out.println("Breadth first search:");
+        tree.breadthFirstSearch();
+        System.out.println();
     }
 }

@@ -2,6 +2,10 @@ package ru.nsk.pavlov.tree;
 
 import ru.nsk.pavlov.tree_node.TreeNode;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 public class BinarySearchTree<E extends Comparable<E>> {
     private TreeNode<E> root;
     private int nodeCount;
@@ -101,6 +105,69 @@ public class BinarySearchTree<E extends Comparable<E>> {
         return nodeCount;
     }
 
+    public void preOrderRecursiveSearch() {
+        preOrderRecursiveSearch(root);
+    }
+
+    private void preOrderRecursiveSearch(TreeNode<E> node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.print(node);
+
+        preOrderRecursiveSearch(node.getLeft());
+        preOrderRecursiveSearch(node.getRight());
+    }
+
+    public void preOrderSearch() {
+        if (root == null) {
+            return;
+        }
+
+        Stack<TreeNode<E>> stack = new Stack<>();
+
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode<E> current = stack.pop();
+
+            System.out.print(current);
+
+            if (current.getRight() != null) {
+                stack.push(current.getRight());
+            }
+
+            if (current.getLeft() != null) {
+                stack.push(current.getLeft());
+            }
+        }
+    }
+
+    public void breadthFirstSearch() {
+        if (root == null) {
+            return;
+        }
+
+        Queue<TreeNode<E>> queue = new LinkedList<>();
+
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode<E> current = queue.poll();
+
+            System.out.print(current);
+
+            if (current.getLeft() != null) {
+                queue.offer(current.getLeft());
+            }
+
+            if (current.getRight() != null) {
+                queue.offer(current.getRight());
+            }
+        }
+    }
+
     private TreeNode<E> findParent(TreeNode<E> target) {
         if (target == null || target == root) {
             return null;
@@ -150,7 +217,7 @@ public class BinarySearchTree<E extends Comparable<E>> {
     public void printTree(TreeNode<E> node) {
         if (node != null) {
             printTree(node.getLeft());
-            System.out.print(node.getData() + " ");
+            System.out.print(node);
             printTree(node.getRight());
         }
     }

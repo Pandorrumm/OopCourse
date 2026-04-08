@@ -36,7 +36,7 @@ public class TreeNode<E> {
     }
 
     @Override
-    public String toString(){
-        return data + "";
+    public String toString() {
+        return data + " ";
     }
 }
