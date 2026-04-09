@@ -1,9 +1,6 @@
-package ru.nsk.pavlov.lambdas_main;
+package ru.nsk.pavlov.lambdas;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -36,14 +33,21 @@ public class Main {
         System.out.println();
         System.out.println(uniqueNamesString);
 
-        double averageAgeOfPersonsUnder18 = persons.stream()
+        OptionalDouble optionalAverage = persons.stream()
                 .filter(p -> p.age() < 18)
                 .mapToInt(Person::age)
-                .average()
-                .orElse(Double.NaN);
+                .average();
+
+        double averageAgeForUnder18Persons;
+
+        if (optionalAverage.isPresent()) {
+            averageAgeForUnder18Persons = optionalAverage.getAsDouble();
+        } else {
+            averageAgeForUnder18Persons = 0.0;
+        }
 
         System.out.println();
-        System.out.println("Средний возраст людей младше 18: " + averageAgeOfPersonsUnder18);
+        System.out.println("Средний возраст людей младше 18: " + averageAgeForUnder18Persons);
 
         Map<String, Double> averageAgesByNames = persons.stream()
                 .collect(Collectors.groupingBy(
