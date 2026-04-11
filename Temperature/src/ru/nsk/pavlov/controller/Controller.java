@@ -19,7 +19,27 @@ public class Controller {
         view.start();
     }
 
-    public void convertToFahrenheit(double celsiusTemperature) {
-        converter.convertToFahrenheit(celsiusTemperature);
+    public void convertCelsiusToFahrenheit(double celsiusTemperature) {
+        converter.convertCelsiusToFahrenheit(celsiusTemperature);
+    }
+
+    public void convertCelsiusToKelvin(double celsiusTemperature) {
+        converter.convertCelsiusToKelvin(celsiusTemperature);
+    }
+
+    public void convertFahrenheitToCelsius(double fahrenheitTemperature) {
+        converter.convertFahrenheitToCelsius(fahrenheitTemperature);
+    }
+
+    public void convertFahrenheitToKelvin(double fahrenheitTemperature) {
+        converter.convertFahrenheitToKelvin(fahrenheitTemperature);
+    }
+
+    public void convertKelvinToCelsius(double kelvinTemperature) {
+        converter.convertKelvinToCelsius(kelvinTemperature);
+    }
+
+    public void convertKelvinToFahrenheit(double kelvinTemperature) {
+        converter.convertKelvinToFahrenheit(kelvinTemperature);
     }
 }
