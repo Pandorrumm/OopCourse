@@ -3,13 +3,15 @@ package ru.nsk.pavlov.controller;
 import ru.nsk.pavlov.model.Converter;
 import ru.nsk.pavlov.view.View;
 
+import java.util.Objects;
+
 public class Controller {
     private final Converter converter;
     private final View view;
 
     public Controller(Converter converter, View view) {
-        this.converter = converter;
-        this.view = view;
+        this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
+        this.view = Objects.requireNonNull(view, "View cannot be null");
 
         view.setController(this);
         converter.addConverterListener(view);
