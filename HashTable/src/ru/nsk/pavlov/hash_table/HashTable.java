@@ -104,11 +104,16 @@ public class HashTable<E> implements Collection<E> {
         if (bucket == null) {
             bucket = new LinkedList<>();
             buckets[index] = bucket;
+        } else {
+            if (bucket.contains(e)) {
+                return false;
+            }
         }
 
-        if (bucket.contains(e)) {
-            return false;
-        }
+        bucket.add(e);
+
+        size++;
+        modCount++;
 
         if (size >= threshold) {
             increaseCapacity();
@@ -122,11 +127,6 @@ public class HashTable<E> implements Collection<E> {
                 buckets[index] = bucket;
             }
         }
-
-        bucket.add(e);
-
-        size++;
-        modCount++;
 
         return true;
     }
@@ -200,10 +200,8 @@ public class HashTable<E> implements Collection<E> {
             if (bucket != null && !bucket.isEmpty()) {
                 int originalSize = bucket.size();
 
-                boolean isModifiedBucket = bucket.retainAll(c);
-
-                if (isModifiedBucket) {
-                    size -= (originalSize - bucket.size()); // обновляем общий размер
+                if (bucket.retainAll(c)) {
+                    size -= originalSize - bucket.size(); // обновляем общий размер
                     isModified = true;
                 }
             }
