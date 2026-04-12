@@ -9,12 +9,12 @@ public class Main {
                 new Person("Петр", 45),
                 new Person("Петр", 19),
                 new Person("Александр", 20),
-                new Person("Александр", 14),
+                new Person("Александр", 15),
                 new Person("Алиса", 22),
                 new Person("Ева", 35),
                 new Person("Матвей", 24),
                 new Person("Полина", 50),
-                new Person("Артем", 10)
+                new Person("Артем", 11)
         );
 
         List<String> uniqueNamesList = persons.stream()
@@ -33,21 +33,18 @@ public class Main {
         System.out.println();
         System.out.println(uniqueNamesString);
 
-        OptionalDouble optionalAverage = persons.stream()
+        OptionalDouble averageAgeOfUnder18 = persons.stream()
                 .filter(p -> p.age() < 18)
                 .mapToInt(Person::age)
                 .average();
 
-        double averageAgeForUnder18Persons;
-
-        if (optionalAverage.isPresent()) {
-            averageAgeForUnder18Persons = optionalAverage.getAsDouble();
-        } else {
-            averageAgeForUnder18Persons = 0.0;
-        }
-
         System.out.println();
-        System.out.println("Средний возраст людей младше 18: " + averageAgeForUnder18Persons);
+
+        if (averageAgeOfUnder18.isPresent()) {
+            System.out.println("Средний возраст людей младше 18 лет: " + averageAgeOfUnder18.getAsDouble());
+        } else {
+            System.out.println("Лиц младше 18 лет не найдено.");
+        }
 
         Map<String, Double> averageAgesByNames = persons.stream()
                 .collect(Collectors.groupingBy(
