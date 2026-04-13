@@ -104,10 +104,8 @@ public class HashTable<E> implements Collection<E> {
         if (bucket == null) {
             bucket = new LinkedList<>();
             buckets[index] = bucket;
-        } else {
-            if (bucket.contains(e)) {
-                return false;
-            }
+        } else if (bucket.contains(e)) {
+            return false;
         }
 
         bucket.add(e);
@@ -117,15 +115,6 @@ public class HashTable<E> implements Collection<E> {
 
         if (size >= threshold) {
             increaseCapacity();
-
-            index = getIndex(e);
-
-            bucket = buckets[index];
-
-            if (bucket == null) {
-                bucket = new LinkedList<>();
-                buckets[index] = bucket;
-            }
         }
 
         return true;
