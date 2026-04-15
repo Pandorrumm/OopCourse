@@ -29,14 +29,14 @@ public class Main {
 
         System.out.println();
         System.out.println("Preorder tree depth first search with recursion:");
-        tree.forEachPreOrder(value -> System.out.println(value + " "));
+        tree.preOrderTraversal(value -> System.out.println(value + " "));
 
         System.out.println();
         System.out.println("Preorder tree depth first search:");
-        tree.forEachPreOrderIterative(value -> System.out.println(value + " "));
+        tree.preOrderIterativeTraversal(value -> System.out.println(value + " "));
 
         System.out.println();
         System.out.println("Breadth first search:");
-        tree.forEachBFS(value -> System.out.println(value + " "));
+        tree.breadthFirstSearch(value -> System.out.println(value + " "));
     }
 }

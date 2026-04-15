@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 public class BinarySearchTree<E> {
     private TreeNode<E> root;
     private int size;
-    private final Comparator<E> comparator;
+    private Comparator<E> comparator;
 
     private static class TreeNode<E> {
         private TreeNode<E> left;
@@ -19,36 +19,31 @@ public class BinarySearchTree<E> {
     }
 
     public BinarySearchTree() {
-        this.root = null;
-        this.comparator = null;
-        this.size = 0;
     }
 
     public BinarySearchTree(Comparator<E> comparator) {
-        this.root = null;
         this.comparator = comparator;
-        this.size = 0;
     }
 
-    private int compare(E leftElement, E rightElement) {
-        if (leftElement == null && rightElement == null) {
+    private int compare(E element1, E element2) {
+        if (element1 == null && element2 == null) {
             return 0;
         }
 
-        if (leftElement == null) {
+        if (element1 == null) {
             return -1;
         }
 
-        if (rightElement == null) {
+        if (element2 == null) {
             return 1;
         }
 
         if (comparator != null) {
-            return comparator.compare(leftElement, rightElement);
-        } else {
-            //noinspection unchecked
-            return ((Comparable<E>) leftElement).compareTo(rightElement);
+            return comparator.compare(element1, element2);
         }
+
+        //noinspection unchecked
+        return ((Comparable<E>) element1).compareTo(element2);
     }
 
     public void add(E element) {
@@ -88,18 +83,15 @@ public class BinarySearchTree<E> {
         size++;
     }
 
-    public boolean contains(Object element) {
+    public boolean contains(E element) {
         if (element == null) {
             return false;
         }
 
-        @SuppressWarnings("unchecked")
-        E e = (E) element;
-
         TreeNode<E> current = root;
 
         while (current != null) {
-            int comparisonResult = compare(e, current.data);
+            int comparisonResult = compare(element, current.data);
 
             if (comparisonResult < 0) {
                 current = current.left;
@@ -121,10 +113,8 @@ public class BinarySearchTree<E> {
         TreeNode<E> nodeToDelete = root;
         TreeNode<E> parent = null;
 
-        int comparisonResult;
-
         while (nodeToDelete != null) {
-            comparisonResult = compare(element, nodeToDelete.data);
+            int comparisonResult = compare(element, nodeToDelete.data);
 
             if (comparisonResult < 0) {
                 parent = nodeToDelete;
@@ -169,26 +159,36 @@ public class BinarySearchTree<E> {
         return true;
     }
 
+    private void replaceChild(TreeNode<E> parent, TreeNode<E> oldChild, TreeNode<E> newChild) {
+        if (parent == null) {
+            root = newChild;
+        } else if (parent.left == oldChild) {
+            parent.left = newChild;
+        } else {
+            parent.right = newChild;
+        }
+    }
+
     public int getSize() {
         return size;
     }
 
-    public void forEachPreOrder(Consumer<E> action) {
-        forEachPreOrderRecursive(root, action);
+    public void preOrderTraversal(Consumer<E> action) {
+        preOrderRecursiveTraversal(root, action);
     }
 
-    private void forEachPreOrderRecursive(TreeNode<E> node, Consumer<E> action) {
+    private void preOrderRecursiveTraversal(TreeNode<E> node, Consumer<E> action) {
         if (node == null) {
             return;
         }
 
         action.accept(node.data);
 
-        forEachPreOrderRecursive(node.left, action);
-        forEachPreOrderRecursive(node.right, action);
+        preOrderRecursiveTraversal(node.left, action);
+        preOrderRecursiveTraversal(node.right, action);
     }
 
-    public void forEachPreOrderIterative(Consumer<E> action) {
+    public void preOrderIterativeTraversal(Consumer<E> action) {
         if (root == null) {
             return;
         }
@@ -210,7 +210,7 @@ public class BinarySearchTree<E> {
         }
     }
 
-    public void forEachBFS(Consumer<E> action) {
+    public void breadthFirstSearch(Consumer<E> action) {
         if (root == null) {
             return;
         }
@@ -232,24 +232,14 @@ public class BinarySearchTree<E> {
         }
     }
 
-    private void replaceChild(TreeNode<E> parent, TreeNode<E> oldChild, TreeNode<E> newChild) {
-        if (parent == null) {
-            root = newChild;
-        } else if (parent.left == oldChild) {
-            parent.left = newChild;
-        } else {
-            parent.right = newChild;
-        }
-    }
-
     @Override
     public String toString() {
         if (root == null) {
             return "[]";
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append('[');
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append('[');
 
         Queue<TreeNode<E>> queue = new LinkedList<>();
         queue.offer(root);
@@ -260,10 +250,10 @@ public class BinarySearchTree<E> {
             TreeNode<E> current = queue.poll();
 
             if (!isFirst) {
-                sb.append(", ");
+                stringBuilder.append(", ");
             }
 
-            sb.append(current.data);
+            stringBuilder.append(current.data);
 
             isFirst = false;
 
@@ -276,8 +266,8 @@ public class BinarySearchTree<E> {
             }
         }
 
-        sb.append(']');
+        stringBuilder.append(']');
 
-        return sb.toString();
+        return stringBuilder.toString();
     }
 }
