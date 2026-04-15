@@ -209,7 +209,7 @@ public class BinarySearchTree<E> {
         queue.offer(root);
 
         while (!queue.isEmpty()) {
-            TreeNode<E> current = queue.poll();
+            TreeNode<E> current = queue.remove();
             action.accept(current.getData());
 
             if (current.getLeft() != null) {
@@ -224,40 +224,19 @@ public class BinarySearchTree<E> {
 
     @Override
     public String toString() {
-        if (root == null) {
-            return "[]";
-        }
-
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        Queue<TreeNode<E>> queue = new LinkedList<>();
-        queue.offer(root);
+        List<E> elements = new ArrayList<>();
 
-        boolean isFirst = true;
+        preOrderRecursiveTraversal(root, elements::add);
 
-        while (!queue.isEmpty()) {
-            TreeNode<E> current = queue.poll();
-
-            if (!isFirst) {
+        for (int i = 0; i < elements.size(); i++) {
+            if (i > 0) {
                 stringBuilder.append(", ");
             }
 
-            if (current.getData() == null) {
-                stringBuilder.append("null");
-            } else {
-                stringBuilder.append(current.getData());
-            }
-
-            isFirst = false;
-
-            if (current.getLeft() != null) {
-                queue.offer(current.getLeft());
-            }
-
-            if (current.getRight() != null) {
-                queue.offer(current.getRight());
-            }
+            stringBuilder.append(elements.get(i) != null ? elements.get(i).toString() : "null");
         }
 
         stringBuilder.append(']');
