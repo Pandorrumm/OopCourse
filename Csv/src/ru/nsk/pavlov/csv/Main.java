@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("""
-                    Передано не правильное количество аргументов.
+                    Передано неправильно количество аргументов.
                     Необходимо передавать 2 аргумента - путь к исходному CSV файлу и путь к HTML файлу.
                     """);
             return;
@@ -19,7 +19,7 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println("Входной файл не найден: " + e.getMessage());
         } catch (IOException e) {
-            System.out.println("Ошибка вводв/вывода: " + e.getMessage());
+            System.out.println("Ошибка ввода/вывода: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Ошибка при конвертации: " + e.getMessage());
         }

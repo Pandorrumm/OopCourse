@@ -3,9 +3,9 @@ package ru.nsk.pavlov.csv;
 import java.io.*;
 
 public class CsvToHtmlConverter {
-    public void convert(String csvFilePatch, String htmlFilePatch) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePatch));
-             PrintWriter writer = new PrintWriter(htmlFilePatch)) {
+    public void convert(String csvFilePath, String htmlFilePath) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath));
+             PrintWriter writer = new PrintWriter(htmlFilePath)) {
             writer.println("""
                     <!DOCTYPE html>
                     <html>
