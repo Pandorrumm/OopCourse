@@ -6,9 +6,10 @@ import java.util.function.Consumer;
 public class BinarySearchTree<E> {
     private TreeNode<E> root;
     private int size;
-    private Comparator<E> comparator;
+    private final Comparator<E> comparator;
 
     public BinarySearchTree() {
+        this.comparator = null;
     }
 
     public BinarySearchTree(Comparator<E> comparator) {
@@ -37,10 +38,6 @@ public class BinarySearchTree<E> {
     }
 
     public void add(E element) {
-        if (element == null) {
-            throw new NullPointerException("Cannot add null element");
-        }
-
         if (root == null) {
             root = new TreeNode<>(element);
 
