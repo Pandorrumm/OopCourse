@@ -14,8 +14,8 @@ public class DesktopView implements View {
     private final Converter converter;
     private Controller controller;
     private JTextField resultLabel;
-    private TemperatureScale selectedStartingScale = TemperatureScale.NONE;
-    private TemperatureScale selectedFinalScale = TemperatureScale.NONE;
+    private TemperatureScale sourceScale = TemperatureScale.NONE;
+    private TemperatureScale targetScale = TemperatureScale.NONE;
 
     public DesktopView(Converter converter) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
@@ -23,6 +23,10 @@ public class DesktopView implements View {
 
     @Override
     public void start() {
+        if (controller == null){
+            throw new IllegalArgumentException("The controller is null");
+        }
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Temperature Converter");
 
@@ -37,15 +41,15 @@ public class DesktopView implements View {
 
             JPanel fromPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             fromPanel.add(new JLabel("From:"));
-            JComboBox<TemperatureScale> startingScaleBox = new JComboBox<>(TemperatureScale.values());
-            startingScaleBox.setPreferredSize(new Dimension(120, 25));
-            fromPanel.add(startingScaleBox);
+            JComboBox<TemperatureScale> sourceScaleBox = new JComboBox<>(TemperatureScale.values());
+            sourceScaleBox.setPreferredSize(new Dimension(120, 25));
+            fromPanel.add(sourceScaleBox);
 
             JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             toPanel.add(new JLabel("To:"));
-            JComboBox<TemperatureScale> finalScaleBox = new JComboBox<>(TemperatureScale.values());
-            finalScaleBox.setPreferredSize(new Dimension(120, 25));
-            toPanel.add(finalScaleBox);
+            JComboBox<TemperatureScale> targetScaleBox = new JComboBox<>(TemperatureScale.values());
+            targetScaleBox.setPreferredSize(new Dimension(120, 25));
+            toPanel.add(targetScaleBox);
 
             topPanel.add(fromPanel);
             topPanel.add(toPanel);
@@ -72,42 +76,42 @@ public class DesktopView implements View {
             panel.add(centerPanel, BorderLayout.CENTER);
             panel.add(bottomPanel, BorderLayout.SOUTH);
 
-            startingScaleBox.addActionListener(new ActionListener() {
+            sourceScaleBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    selectedStartingScale = (TemperatureScale) startingScaleBox.getSelectedItem();
+                    sourceScale = (TemperatureScale) sourceScaleBox.getSelectedItem();
                 }
             });
 
-            finalScaleBox.addActionListener(new ActionListener() {
+            targetScaleBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    selectedFinalScale = (TemperatureScale) finalScaleBox.getSelectedItem();
+                    targetScale = (TemperatureScale) targetScaleBox.getSelectedItem();
                 }
             });
 
             convertButton.addActionListener(actionEvent -> {
                 try {
-                    if (selectedStartingScale == selectedFinalScale) {
+                    if (sourceScale == targetScale) {
                         JOptionPane.showMessageDialog(frame, "The temperature scales match", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (selectedStartingScale == TemperatureScale.NONE || selectedFinalScale == TemperatureScale.NONE) {
+                    } else if (sourceScale == TemperatureScale.NONE || targetScale == TemperatureScale.NONE) {
                         JOptionPane.showMessageDialog(frame, "Temperature scale cannot be NONE", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (selectedStartingScale == TemperatureScale.CELSIUS && selectedFinalScale == TemperatureScale.FAHRENHEIT) {
+                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.FAHRENHEIT) {
                         double celsiusTemperature = Double.parseDouble(inputField.getText());
                         controller.convertCelsiusToFahrenheit(celsiusTemperature);
-                    } else if (selectedStartingScale == TemperatureScale.CELSIUS && selectedFinalScale == TemperatureScale.KELVIN) {
+                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.KELVIN) {
                         double celsiusTemperature = Double.parseDouble(inputField.getText());
                         controller.convertCelsiusToKelvin(celsiusTemperature);
-                    } else if (selectedStartingScale == TemperatureScale.FAHRENHEIT && selectedFinalScale == TemperatureScale.CELSIUS) {
+                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.CELSIUS) {
                         double fahrenheitTemperature = Double.parseDouble(inputField.getText());
                         controller.convertFahrenheitToCelsius(fahrenheitTemperature);
-                    } else if (selectedStartingScale == TemperatureScale.FAHRENHEIT && selectedFinalScale == TemperatureScale.KELVIN) {
+                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.KELVIN) {
                         double fahrenheitTemperature = Double.parseDouble(inputField.getText());
                         controller.convertFahrenheitToKelvin(fahrenheitTemperature);
-                    } else if (selectedStartingScale == TemperatureScale.KELVIN && selectedFinalScale == TemperatureScale.CELSIUS) {
+                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.CELSIUS) {
                         double kelvinTemperature = Double.parseDouble(inputField.getText());
                         controller.convertKelvinToCelsius(kelvinTemperature);
-                    } else if (selectedStartingScale == TemperatureScale.KELVIN && selectedFinalScale == TemperatureScale.FAHRENHEIT) {
+                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.FAHRENHEIT) {
                         double kelvinTemperature = Double.parseDouble(inputField.getText());
                         controller.convertKelvinToFahrenheit(kelvinTemperature);
                     }
@@ -124,7 +128,7 @@ public class DesktopView implements View {
 
     @Override
     public void setController(Controller controller) {
-        this.controller = controller;
+        this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
     }
 
     @Override
