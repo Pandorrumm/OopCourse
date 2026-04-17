@@ -13,6 +13,7 @@ public class Main {
         tree.add(15);
         tree.add(5);
         tree.add(100);
+        tree.add(null);
 
         System.out.println(tree);
 

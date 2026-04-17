@@ -5,8 +5,8 @@ import java.util.function.Consumer;
 
 public class BinarySearchTree<E> {
     private TreeNode<E> root;
-    private int size;
     private final Comparator<E> comparator;
+    private int size;
 
     public BinarySearchTree() {
         this.comparator = null;
@@ -45,19 +45,21 @@ public class BinarySearchTree<E> {
             return;
         }
 
-        TreeNode<E> current = root;
+        TreeNode<E> currentNode = root;
         TreeNode<E> parent = null;
 
         int comparisonResult = 0;
 
-        while (current != null) {
-            parent = current;
-            comparisonResult = compare(element, current.getData());
+        while (currentNode != null) {
+            parent = currentNode;
+            comparisonResult = compare(element, currentNode.getData());
 
-            if (comparisonResult < 0) {
-                current = current.getLeft();
-            } else if (comparisonResult > 0) {
-                current = current.getRight();
+            if (comparisonResult == 0) {
+                return;
+            } else if (comparisonResult < 0) {
+                currentNode = currentNode.getLeft();
+            } else {
+                currentNode = currentNode.getRight();
             }
         }
 
@@ -71,19 +73,15 @@ public class BinarySearchTree<E> {
     }
 
     public boolean contains(E element) {
-        if (element == null) {
-            return false;
-        }
+        TreeNode<E> currentNode = root;
 
-        TreeNode<E> current = root;
-
-        while (current != null) {
-            int comparisonResult = compare(element, current.getData());
+        while (currentNode != null) {
+            int comparisonResult = compare(element, currentNode.getData());
 
             if (comparisonResult < 0) {
-                current = current.getLeft();
+                currentNode = currentNode.getLeft();
             } else if (comparisonResult > 0) {
-                current = current.getRight();
+                currentNode = currentNode.getRight();
             } else {
                 return true;
             }
@@ -93,7 +91,7 @@ public class BinarySearchTree<E> {
     }
 
     public boolean remove(E element) {
-        if (element == null || root == null) {
+        if (root == null) {
             return false;
         }
 
