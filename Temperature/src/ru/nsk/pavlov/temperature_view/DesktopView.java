@@ -21,7 +21,7 @@ public class DesktopView implements View {
 
     @Override
     public void start() {
-        if (controller == null){
+        if (controller == null) {
             throw new IllegalArgumentException("The controller is null");
         }
 
@@ -35,16 +35,16 @@ public class DesktopView implements View {
             JPanel panel = new JPanel(new BorderLayout(10, 10));
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            JPanel topPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+            JPanel topPanel = new JPanel(new GridLayout(1, 2));
 
-            JPanel fromPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            fromPanel.add(new JLabel("From:"));
+            JPanel fromPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            fromPanel.add(new JLabel("From: "));
             JComboBox<TemperatureScale> sourceScaleBox = new JComboBox<>(TemperatureScale.values());
             sourceScaleBox.setPreferredSize(new Dimension(120, 25));
             fromPanel.add(sourceScaleBox);
 
-            JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            toPanel.add(new JLabel("To:"));
+            JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            toPanel.add(new JLabel("To: "));
             JComboBox<TemperatureScale> targetScaleBox = new JComboBox<>(TemperatureScale.values());
             targetScaleBox.setPreferredSize(new Dimension(120, 25));
             toPanel.add(targetScaleBox);
@@ -52,7 +52,7 @@ public class DesktopView implements View {
             topPanel.add(fromPanel);
             topPanel.add(toPanel);
 
-            JPanel centerPanel = new JPanel(new GridLayout(2, 2, -50, 20));
+            JPanel centerPanel = new JPanel(new GridLayout(2, 2, 0, 20));
 
             centerPanel.add(new JLabel("Enter the temperature:"));
             JTextField inputField = new JTextField();
