@@ -6,7 +6,9 @@ import ru.nsk.pavlov.temperature_controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 public class DesktopView implements View {
     private final Converter converter;
@@ -14,9 +16,21 @@ public class DesktopView implements View {
     private JTextField resultLabel;
     private TemperatureScale sourceScale;
     private TemperatureScale targetScale;
+    private final List<TemperatureScale> availableScales;
 
-    public DesktopView(Converter converter) {
+    public DesktopView(Converter converter, List<TemperatureScale> availableScales) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
+
+        this.availableScales = new ArrayList<>(availableScales);
+
+        if (!this.availableScales.isEmpty()){
+            sourceScale = this.availableScales.getFirst();
+            targetScale = this.availableScales.getFirst();
+        }
+    }
+
+    public List<TemperatureScale> getAvailableScales(){
+        return new ArrayList<>(availableScales);
     }
 
     @Override
@@ -39,17 +53,25 @@ public class DesktopView implements View {
 
             JPanel fromPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             fromPanel.add(new JLabel("From: "));
-            JComboBox<TemperatureScale> sourceScaleBox = new JComboBox<>(TemperatureScale.values());
+            JComboBox<String> sourceScaleBox = new JComboBox<>();
+
+            for (TemperatureScale availableScale : availableScales) {
+                sourceScaleBox.addItem(availableScale.getName());
+            }
+
             sourceScaleBox.setPreferredSize(new Dimension(120, 25));
             fromPanel.add(sourceScaleBox);
-            sourceScale = (TemperatureScale) sourceScaleBox.getSelectedItem();
 
             JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             toPanel.add(new JLabel("To: "));
-            JComboBox<TemperatureScale> targetScaleBox = new JComboBox<>(TemperatureScale.values());
+            JComboBox<String> targetScaleBox = new JComboBox<>();
+
+            for (TemperatureScale availableScale : availableScales) {
+                targetScaleBox.addItem(availableScale.getName());
+            }
+
             targetScaleBox.setPreferredSize(new Dimension(120, 25));
             toPanel.add(targetScaleBox);
-            targetScale = (TemperatureScale) targetScaleBox.getSelectedItem();
 
             topPanel.add(fromPanel);
             topPanel.add(toPanel);
@@ -76,11 +98,33 @@ public class DesktopView implements View {
             panel.add(centerPanel, BorderLayout.CENTER);
             panel.add(bottomPanel, BorderLayout.SOUTH);
 
-            sourceScaleBox.addActionListener(e -> sourceScale = (TemperatureScale) sourceScaleBox.getSelectedItem());
-            targetScaleBox.addActionListener(e -> targetScale = (TemperatureScale) targetScaleBox.getSelectedItem());
+            sourceScaleBox.addActionListener(e -> {
+                String selectedScale = (String) sourceScaleBox.getSelectedItem();
+
+                TemperatureScale temperatureScale = getScaleByName(selectedScale);
+
+                if (temperatureScale != null){
+                    converter.setFromScale(temperatureScale);
+                }
+            });
+
+            targetScaleBox.addActionListener(e -> {
+                String selectedScale = (String) targetScaleBox.getSelectedItem();
+
+                TemperatureScale temperatureScale = getScaleByName(selectedScale);
+
+                if (temperatureScale != null){
+                    converter.setToScale(temperatureScale);
+                }
+            });
 
             convertButton.addActionListener(actionEvent -> {
                 try {
+                    double temperature = Double.parseDouble(inputField.getText());
+
+                    converter.setInputValue(temperature);
+                    converter.convert();
+
 //                    if (sourceScale == targetScale) {
 //                        double temperature = Double.parseDouble(inputField.getText());
 //                        controller.convertingIdenticalScales(temperature, sourceScale);
@@ -114,6 +158,16 @@ public class DesktopView implements View {
         });
     }
 
+    public TemperatureScale getScaleByName(String nameScale) {
+        for (TemperatureScale scale : availableScales) {
+            if (scale.getName().equals(nameScale)) {
+                return scale;
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void setController(Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
@@ -121,16 +175,6 @@ public class DesktopView implements View {
 
     @Override
     public void temperatureConverted(TemperatureScale temperatureScale) {
-//        switch (temperatureScale) {
-//            case CELSIUS:
-//                resultLabel.setText(String.format("%.2f", converter.getCelsiusTemperature()));
-//                break;
-//            case FAHRENHEIT:
-//                resultLabel.setText(String.format("%.2f", converter.getFahrenheitTemperature()));
-//                break;
-//            case KELVIN:
-//                resultLabel.setText(String.format("%.2f", converter.getKelvinTemperature()));
-//                break;
-//        }
+        resultLabel.setText(String.format("%.2f", converter.getResult()));
     }
 }

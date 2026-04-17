@@ -1,26 +1,15 @@
 package ru.nsk.pavlov.temperature_model;
 
 public interface Converter {
-//    void convertCelsiusToFahrenheit(double celsiusTemperature);
-//
-//    void convertCelsiusToKelvin(double celsiusTemperature);
-//
-//    void convertFahrenheitToCelsius(double fahrenheitTemperature);
-//
-//    void convertFahrenheitToKelvin(double fahrenheitTemperature);
-//
-//    void convertKelvinToCelsius(double kelvinTemperature);
-//
-//    void convertKelvinToFahrenheit(double kelvinTemperature);
-//
-//    void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale);
-    void convert(double temperature, TemperatureScale targetTemperatureScale);
+    void convert();
 
-    double getCelsiusTemperature();
+    void setFromScale(TemperatureScale scale);
 
-    double getFahrenheitTemperature();
+    void setToScale(TemperatureScale scale);
 
-    double getKelvinTemperature();
+    void setInputValue(double value);
+
+    double getResult();
 
     void addConverterListener(ConverterListener listener);
 }
