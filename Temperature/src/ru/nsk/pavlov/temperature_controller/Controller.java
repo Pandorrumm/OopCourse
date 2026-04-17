@@ -22,31 +22,42 @@ public class Controller {
         view.start();
     }
 
-    public void convertCelsiusToFahrenheit(double celsiusTemperature) {
-        converter.convertCelsiusToFahrenheit(celsiusTemperature);
+    public void convertTemperature(){
+      //  converter.convert(celsiusTemperature, TemperatureScale.FAHRENHEIT);
     }
 
-    public void convertCelsiusToKelvin(double celsiusTemperature) {
-        converter.convertCelsiusToKelvin(celsiusTemperature);
-    }
-
-    public void convertFahrenheitToCelsius(double fahrenheitTemperature) {
-        converter.convertFahrenheitToCelsius(fahrenheitTemperature);
-    }
-
-    public void convertFahrenheitToKelvin(double fahrenheitTemperature) {
-        converter.convertFahrenheitToKelvin(fahrenheitTemperature);
-    }
-
-    public void convertKelvinToCelsius(double kelvinTemperature) {
-        converter.convertKelvinToCelsius(kelvinTemperature);
-    }
-
-    public void convertKelvinToFahrenheit(double kelvinTemperature) {
-        converter.convertKelvinToFahrenheit(kelvinTemperature);
-    }
-
-    public void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale){
-        converter.convertingIdenticalScales(temperature, temperatureScale);
-    }
+//    public void convertCelsiusToFahrenheit(double celsiusTemperature) {
+//       // converter.convertCelsiusToFahrenheit(celsiusTemperature);
+//        converter.convert(celsiusTemperature, TemperatureScale.FAHRENHEIT);
+//    }
+//
+//    public void convertCelsiusToKelvin(double celsiusTemperature) {
+//    //    converter.convertCelsiusToKelvin(celsiusTemperature);
+//        converter.convert(celsiusTemperature, TemperatureScale.KELVIN);
+//    }
+//
+//    public void convertFahrenheitToCelsius(double fahrenheitTemperature) {
+//       // converter.convertFahrenheitToCelsius(fahrenheitTemperature);
+//        converter.convert(fahrenheitTemperature, TemperatureScale.CELSIUS);
+//    }
+//
+//    public void convertFahrenheitToKelvin(double fahrenheitTemperature) {
+//       // converter.convertFahrenheitToKelvin(fahrenheitTemperature);
+//        converter.convert(fahrenheitTemperature, TemperatureScale.KELVIN);
+//    }
+//
+//    public void convertKelvinToCelsius(double kelvinTemperature) {
+//       // converter.convertKelvinToCelsius(kelvinTemperature);
+//        converter.convert(kelvinTemperature, TemperatureScale.CELSIUS);
+//    }
+//
+//    public void convertKelvinToFahrenheit(double kelvinTemperature) {
+//       // converter.convertKelvinToFahrenheit(kelvinTemperature);
+//        converter.convert(kelvinTemperature, TemperatureScale.FAHRENHEIT);
+//    }
+//
+//    public void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale){
+//      //  converter.convertingIdenticalScales(temperature, temperatureScale);
+//        converter.convert(temperature, temperatureScale);
+//    }
 }

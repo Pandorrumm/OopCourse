@@ -81,28 +81,28 @@ public class DesktopView implements View {
 
             convertButton.addActionListener(actionEvent -> {
                 try {
-                    if (sourceScale == targetScale) {
-                        double temperature = Double.parseDouble(inputField.getText());
-                        controller.convertingIdenticalScales(temperature, sourceScale);
-                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.FAHRENHEIT) {
-                        double celsiusTemperature = Double.parseDouble(inputField.getText());
-                        controller.convertCelsiusToFahrenheit(celsiusTemperature);
-                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.KELVIN) {
-                        double celsiusTemperature = Double.parseDouble(inputField.getText());
-                        controller.convertCelsiusToKelvin(celsiusTemperature);
-                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.CELSIUS) {
-                        double fahrenheitTemperature = Double.parseDouble(inputField.getText());
-                        controller.convertFahrenheitToCelsius(fahrenheitTemperature);
-                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.KELVIN) {
-                        double fahrenheitTemperature = Double.parseDouble(inputField.getText());
-                        controller.convertFahrenheitToKelvin(fahrenheitTemperature);
-                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.CELSIUS) {
-                        double kelvinTemperature = Double.parseDouble(inputField.getText());
-                        controller.convertKelvinToCelsius(kelvinTemperature);
-                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.FAHRENHEIT) {
-                        double kelvinTemperature = Double.parseDouble(inputField.getText());
-                        controller.convertKelvinToFahrenheit(kelvinTemperature);
-                    }
+//                    if (sourceScale == targetScale) {
+//                        double temperature = Double.parseDouble(inputField.getText());
+//                        controller.convertingIdenticalScales(temperature, sourceScale);
+//                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.FAHRENHEIT) {
+//                        double celsiusTemperature = Double.parseDouble(inputField.getText());
+//                        controller.convertCelsiusToFahrenheit(celsiusTemperature);
+//                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.KELVIN) {
+//                        double celsiusTemperature = Double.parseDouble(inputField.getText());
+//                        controller.convertCelsiusToKelvin(celsiusTemperature);
+//                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.CELSIUS) {
+//                        double fahrenheitTemperature = Double.parseDouble(inputField.getText());
+//                        controller.convertFahrenheitToCelsius(fahrenheitTemperature);
+//                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.KELVIN) {
+//                        double fahrenheitTemperature = Double.parseDouble(inputField.getText());
+//                        controller.convertFahrenheitToKelvin(fahrenheitTemperature);
+//                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.CELSIUS) {
+//                        double kelvinTemperature = Double.parseDouble(inputField.getText());
+//                        controller.convertKelvinToCelsius(kelvinTemperature);
+//                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.FAHRENHEIT) {
+//                        double kelvinTemperature = Double.parseDouble(inputField.getText());
+//                        controller.convertKelvinToFahrenheit(kelvinTemperature);
+//                    }
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(frame, "The temperature should be a number", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -121,16 +121,16 @@ public class DesktopView implements View {
 
     @Override
     public void temperatureConverted(TemperatureScale temperatureScale) {
-        switch (temperatureScale) {
-            case CELSIUS:
-                resultLabel.setText(String.format("%.2f", converter.getCelsiusTemperature()));
-                break;
-            case FAHRENHEIT:
-                resultLabel.setText(String.format("%.2f", converter.getFahrenheitTemperature()));
-                break;
-            case KELVIN:
-                resultLabel.setText(String.format("%.2f", converter.getKelvinTemperature()));
-                break;
-        }
+//        switch (temperatureScale) {
+//            case CELSIUS:
+//                resultLabel.setText(String.format("%.2f", converter.getCelsiusTemperature()));
+//                break;
+//            case FAHRENHEIT:
+//                resultLabel.setText(String.format("%.2f", converter.getFahrenheitTemperature()));
+//                break;
+//            case KELVIN:
+//                resultLabel.setText(String.format("%.2f", converter.getKelvinTemperature()));
+//                break;
+//        }
     }
 }

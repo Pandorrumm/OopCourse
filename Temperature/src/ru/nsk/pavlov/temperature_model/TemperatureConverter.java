@@ -10,64 +10,69 @@ public class TemperatureConverter implements Converter {
     private double fahrenheitTemperature;
     private double kelvinTemperature;
 
-    @Override
-    public void convertCelsiusToFahrenheit(double celsiusTemperature) {
-        this.celsiusTemperature = celsiusTemperature;
-        fahrenheitTemperature = celsiusTemperature * 9 / 5 + 32;
-        notifyListeners(TemperatureScale.FAHRENHEIT);
-    }
+//    @Override
+//    public void convertCelsiusToFahrenheit(double celsiusTemperature) {
+//        this.celsiusTemperature = celsiusTemperature;
+//        fahrenheitTemperature = celsiusTemperature * 9 / 5 + 32;
+//        notifyListeners(TemperatureScale.FAHRENHEIT);
+//    }
+//
+//    @Override
+//    public void convertCelsiusToKelvin(double celsiusTemperature) {
+//        this.celsiusTemperature = celsiusTemperature;
+//        kelvinTemperature = celsiusTemperature + 273.15;
+//        notifyListeners(TemperatureScale.KELVIN);
+//    }
+//
+//    @Override
+//    public void convertFahrenheitToCelsius(double fahrenheitTemperature) {
+//        this.fahrenheitTemperature = fahrenheitTemperature;
+//        celsiusTemperature = (fahrenheitTemperature - 32) * 5 / 9;
+//        notifyListeners(TemperatureScale.CELSIUS);
+//    }
+//
+//    @Override
+//    public void convertFahrenheitToKelvin(double fahrenheitTemperature) {
+//        this.fahrenheitTemperature = fahrenheitTemperature;
+//        kelvinTemperature = (fahrenheitTemperature - 32) * 5 / 9 + 273.15;
+//        notifyListeners(TemperatureScale.KELVIN);
+//    }
+//
+//    @Override
+//    public void convertKelvinToCelsius(double kelvinTemperature) {
+//        this.kelvinTemperature = kelvinTemperature;
+//        celsiusTemperature = kelvinTemperature - 273.15;
+//        notifyListeners(TemperatureScale.CELSIUS);
+//    }
+//
+//    @Override
+//    public void convertKelvinToFahrenheit(double kelvinTemperature) {
+//        this.kelvinTemperature = kelvinTemperature;
+//        fahrenheitTemperature = (kelvinTemperature - 273.15) * 9 / 5 + 32;
+//        notifyListeners(TemperatureScale.FAHRENHEIT);
+//    }
+//
+//    @Override
+//    public void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale) {
+//        switch (temperatureScale) {
+//            case CELSIUS:
+//                celsiusTemperature = temperature;
+//                notifyListeners(TemperatureScale.CELSIUS);
+//                break;
+//            case FAHRENHEIT:
+//                fahrenheitTemperature = temperature;
+//                notifyListeners(TemperatureScale.FAHRENHEIT);
+//                break;
+//            case KELVIN:
+//                kelvinTemperature = temperature;
+//                notifyListeners(TemperatureScale.KELVIN);
+//                break;
+//        }
+//    }
 
     @Override
-    public void convertCelsiusToKelvin(double celsiusTemperature) {
-        this.celsiusTemperature = celsiusTemperature;
-        kelvinTemperature = celsiusTemperature + 273.15;
-        notifyListeners(TemperatureScale.KELVIN);
-    }
-
-    @Override
-    public void convertFahrenheitToCelsius(double fahrenheitTemperature) {
-        this.fahrenheitTemperature = fahrenheitTemperature;
-        celsiusTemperature = (fahrenheitTemperature - 32) * 5 / 9;
-        notifyListeners(TemperatureScale.CELSIUS);
-    }
-
-    @Override
-    public void convertFahrenheitToKelvin(double fahrenheitTemperature) {
-        this.fahrenheitTemperature = fahrenheitTemperature;
-        kelvinTemperature = (fahrenheitTemperature - 32) * 5 / 9 + 273.15;
-        notifyListeners(TemperatureScale.KELVIN);
-    }
-
-    @Override
-    public void convertKelvinToCelsius(double kelvinTemperature) {
-        this.kelvinTemperature = kelvinTemperature;
-        celsiusTemperature = kelvinTemperature - 273.15;
-        notifyListeners(TemperatureScale.CELSIUS);
-    }
-
-    @Override
-    public void convertKelvinToFahrenheit(double kelvinTemperature) {
-        this.kelvinTemperature = kelvinTemperature;
-        fahrenheitTemperature = (kelvinTemperature - 273.15) * 9 / 5 + 32;
-        notifyListeners(TemperatureScale.FAHRENHEIT);
-    }
-
-    @Override
-    public void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale) {
-        switch (temperatureScale) {
-            case CELSIUS:
-                celsiusTemperature = temperature;
-                notifyListeners(TemperatureScale.CELSIUS);
-                break;
-            case FAHRENHEIT:
-                fahrenheitTemperature = temperature;
-                notifyListeners(TemperatureScale.FAHRENHEIT);
-                break;
-            case KELVIN:
-                kelvinTemperature = temperature;
-                notifyListeners(TemperatureScale.KELVIN);
-                break;
-        }
+    public void convert(double temperature, TemperatureScale targetTemperatureScale) {
+        
     }
 
     @Override
