@@ -12,8 +12,8 @@ public class DesktopView implements View {
     private final Converter converter;
     private Controller controller;
     private JTextField resultLabel;
-    private TemperatureScale sourceScale = TemperatureScale.NONE;
-    private TemperatureScale targetScale = TemperatureScale.NONE;
+    private TemperatureScale sourceScale;
+    private TemperatureScale targetScale;
 
     public DesktopView(Converter converter) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
@@ -42,12 +42,14 @@ public class DesktopView implements View {
             JComboBox<TemperatureScale> sourceScaleBox = new JComboBox<>(TemperatureScale.values());
             sourceScaleBox.setPreferredSize(new Dimension(120, 25));
             fromPanel.add(sourceScaleBox);
+            sourceScale = (TemperatureScale) sourceScaleBox.getSelectedItem();
 
             JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             toPanel.add(new JLabel("To: "));
             JComboBox<TemperatureScale> targetScaleBox = new JComboBox<>(TemperatureScale.values());
             targetScaleBox.setPreferredSize(new Dimension(120, 25));
             toPanel.add(targetScaleBox);
+            targetScale = (TemperatureScale) targetScaleBox.getSelectedItem();
 
             topPanel.add(fromPanel);
             topPanel.add(toPanel);
@@ -80,9 +82,8 @@ public class DesktopView implements View {
             convertButton.addActionListener(actionEvent -> {
                 try {
                     if (sourceScale == targetScale) {
-                        JOptionPane.showMessageDialog(frame, "The temperature scales match", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (sourceScale == TemperatureScale.NONE || targetScale == TemperatureScale.NONE) {
-                        JOptionPane.showMessageDialog(frame, "Temperature scale cannot be NONE", "Error", JOptionPane.ERROR_MESSAGE);
+                        double temperature = Double.parseDouble(inputField.getText());
+                        controller.convertingIdenticalScales(temperature, sourceScale);
                     } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.FAHRENHEIT) {
                         double celsiusTemperature = Double.parseDouble(inputField.getText());
                         controller.convertCelsiusToFahrenheit(celsiusTemperature);

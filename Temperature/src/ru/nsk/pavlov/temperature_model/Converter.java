@@ -13,6 +13,8 @@ public interface Converter {
 
     void convertKelvinToFahrenheit(double kelvinTemperature);
 
+    void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale);
+
     double getCelsiusTemperature();
 
     double getFahrenheitTemperature();

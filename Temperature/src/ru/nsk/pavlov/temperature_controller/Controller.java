@@ -1,6 +1,7 @@
 package ru.nsk.pavlov.temperature_controller;
 
 import ru.nsk.pavlov.temperature_model.Converter;
+import ru.nsk.pavlov.temperature_model.TemperatureScale;
 import ru.nsk.pavlov.temperature_view.View;
 
 import java.util.Objects;
@@ -43,5 +44,9 @@ public class Controller {
 
     public void convertKelvinToFahrenheit(double kelvinTemperature) {
         converter.convertKelvinToFahrenheit(kelvinTemperature);
+    }
+
+    public void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale){
+        converter.convertingIdenticalScales(temperature, temperatureScale);
     }
 }

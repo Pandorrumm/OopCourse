@@ -53,6 +53,24 @@ public class TemperatureConverter implements Converter {
     }
 
     @Override
+    public void convertingIdenticalScales(double temperature, TemperatureScale temperatureScale) {
+        switch (temperatureScale) {
+            case CELSIUS:
+                celsiusTemperature = temperature;
+                notifyListeners(TemperatureScale.CELSIUS);
+                break;
+            case FAHRENHEIT:
+                fahrenheitTemperature = temperature;
+                notifyListeners(TemperatureScale.FAHRENHEIT);
+                break;
+            case KELVIN:
+                kelvinTemperature = temperature;
+                notifyListeners(TemperatureScale.KELVIN);
+                break;
+        }
+    }
+
+    @Override
     public double getCelsiusTemperature() {
         return celsiusTemperature;
     }
