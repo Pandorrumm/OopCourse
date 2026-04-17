@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 public class BinarySearchTree<E> {
     private TreeNode<E> root;
     private final Comparator<E> comparator;
-    private int size;
 
     public BinarySearchTree() {
         this.comparator = null;
@@ -36,6 +35,8 @@ public class BinarySearchTree<E> {
         //noinspection unchecked
         return ((Comparable<E>) element1).compareTo(element2);
     }
+
+    private int size;
 
     public void add(E element) {
         if (root == null) {
@@ -158,22 +159,22 @@ public class BinarySearchTree<E> {
         return size;
     }
 
-    public void preOrderTraversal(Consumer<E> action) {
-        preOrderRecursiveTraversal(root, action);
+    public void preOrderSearch(Consumer<E> action) {
+        preOrderSearchRecursive(root, action);
     }
 
-    private void preOrderRecursiveTraversal(TreeNode<E> node, Consumer<E> action) {
+    private void preOrderSearchRecursive(TreeNode<E> node, Consumer<E> consumer) {
         if (node == null) {
             return;
         }
 
-        action.accept(node.getData());
+        consumer.accept(node.getData());
 
-        preOrderRecursiveTraversal(node.getLeft(), action);
-        preOrderRecursiveTraversal(node.getRight(), action);
+        preOrderSearchRecursive(node.getLeft(), consumer);
+        preOrderSearchRecursive(node.getRight(), consumer);
     }
 
-    public void preOrderIterativeTraversal(Consumer<E> action) {
+    public void preOrderSearchIterative(Consumer<E> consumer) {
         if (root == null) {
             return;
         }
@@ -183,7 +184,7 @@ public class BinarySearchTree<E> {
 
         while (!stack.isEmpty()) {
             TreeNode<E> current = stack.pop();
-            action.accept(current.getData());
+            consumer.accept(current.getData());
 
             if (current.getRight() != null) {
                 stack.push(current.getRight());
@@ -195,7 +196,7 @@ public class BinarySearchTree<E> {
         }
     }
 
-    public void breadthFirstSearch(Consumer<E> action) {
+    public void breadthFirstSearch(Consumer<E> consumer) {
         if (root == null) {
             return;
         }
@@ -205,7 +206,7 @@ public class BinarySearchTree<E> {
 
         while (!queue.isEmpty()) {
             TreeNode<E> current = queue.remove();
-            action.accept(current.getData());
+            consumer.accept(current.getData());
 
             if (current.getLeft() != null) {
                 queue.offer(current.getLeft());
@@ -222,16 +223,10 @@ public class BinarySearchTree<E> {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        List<E> elements = new ArrayList<>();
+        preOrderSearch(element -> stringBuilder.append(element).append(", "));
 
-        preOrderRecursiveTraversal(root, elements::add);
-
-        for (int i = 0; i < elements.size(); i++) {
-            if (i > 0) {
-                stringBuilder.append(", ");
-            }
-
-            stringBuilder.append(elements.get(i) != null ? elements.get(i).toString() : "null");
+        if (stringBuilder.length() > 1) {
+            stringBuilder.setLength(stringBuilder.length() - 2);
         }
 
         stringBuilder.append(']');
