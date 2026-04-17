@@ -54,7 +54,7 @@ public class DesktopView implements View {
 
             JPanel centerPanel = new JPanel(new GridLayout(2, 2, -50, 20));
 
-            centerPanel.add(new JLabel("Enter the value:"));
+            centerPanel.add(new JLabel("Enter the temperature:"));
             JTextField inputField = new JTextField();
             centerPanel.add(inputField);
 
@@ -122,13 +122,13 @@ public class DesktopView implements View {
     public void temperatureConverted(TemperatureScale temperatureScale) {
         switch (temperatureScale) {
             case CELSIUS:
-                resultLabel.setText("Temperature in Celsius scale: " + Math.round(converter.getCelsiusTemperature() * 10.0) / 10.0);
+                resultLabel.setText(String.format("%.2f", converter.getCelsiusTemperature()));
                 break;
             case FAHRENHEIT:
-                resultLabel.setText("Temperature in the Fahrenheit scale: " + Math.round(converter.getFahrenheitTemperature() * 10.0) / 10.0);
+                resultLabel.setText(String.format("%.2f", converter.getFahrenheitTemperature()));
                 break;
             case KELVIN:
-                resultLabel.setText("Temperature in the Kelvin scale: " + Math.round(converter.getKelvinTemperature() * 10.0) / 10.0);
+                resultLabel.setText(String.format("%.2f", converter.getKelvinTemperature()));
                 break;
         }
     }
