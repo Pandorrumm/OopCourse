@@ -8,7 +8,7 @@ public class BinarySearchTree<E> {
     private final Comparator<E> comparator;
 
     public BinarySearchTree() {
-        this.comparator = null;
+        comparator = null;
     }
 
     public BinarySearchTree(Comparator<E> comparator) {
