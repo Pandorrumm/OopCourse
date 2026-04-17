@@ -14,23 +14,12 @@ public class DesktopView implements View {
     private final Converter converter;
     private Controller controller;
     private JTextField resultLabel;
-    private TemperatureScale sourceScale;
-    private TemperatureScale targetScale;
     private final List<TemperatureScale> availableScales;
 
     public DesktopView(Converter converter, List<TemperatureScale> availableScales) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
 
         this.availableScales = new ArrayList<>(availableScales);
-
-        if (!this.availableScales.isEmpty()){
-            sourceScale = this.availableScales.getFirst();
-            targetScale = this.availableScales.getFirst();
-        }
-    }
-
-    public List<TemperatureScale> getAvailableScales(){
-        return new ArrayList<>(availableScales);
     }
 
     @Override
@@ -59,6 +48,8 @@ public class DesktopView implements View {
                 sourceScaleBox.addItem(availableScale.getName());
             }
 
+            controller.setFromScale(getScaleByName((String) sourceScaleBox.getSelectedItem()));
+
             sourceScaleBox.setPreferredSize(new Dimension(120, 25));
             fromPanel.add(sourceScaleBox);
 
@@ -69,6 +60,8 @@ public class DesktopView implements View {
             for (TemperatureScale availableScale : availableScales) {
                 targetScaleBox.addItem(availableScale.getName());
             }
+
+            controller.setToScale(getScaleByName((String) targetScaleBox.getSelectedItem()));
 
             targetScaleBox.setPreferredSize(new Dimension(120, 25));
             toPanel.add(targetScaleBox);
@@ -103,8 +96,8 @@ public class DesktopView implements View {
 
                 TemperatureScale temperatureScale = getScaleByName(selectedScale);
 
-                if (temperatureScale != null){
-                    converter.setFromScale(temperatureScale);
+                if (temperatureScale != null) {
+                    controller.setFromScale(temperatureScale);
                 }
             });
 
@@ -113,8 +106,8 @@ public class DesktopView implements View {
 
                 TemperatureScale temperatureScale = getScaleByName(selectedScale);
 
-                if (temperatureScale != null){
-                    converter.setToScale(temperatureScale);
+                if (temperatureScale != null) {
+                    controller.setToScale(temperatureScale);
                 }
             });
 
@@ -122,31 +115,8 @@ public class DesktopView implements View {
                 try {
                     double temperature = Double.parseDouble(inputField.getText());
 
-                    converter.setInputValue(temperature);
-                    converter.convert();
-
-//                    if (sourceScale == targetScale) {
-//                        double temperature = Double.parseDouble(inputField.getText());
-//                        controller.convertingIdenticalScales(temperature, sourceScale);
-//                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.FAHRENHEIT) {
-//                        double celsiusTemperature = Double.parseDouble(inputField.getText());
-//                        controller.convertCelsiusToFahrenheit(celsiusTemperature);
-//                    } else if (sourceScale == TemperatureScale.CELSIUS && targetScale == TemperatureScale.KELVIN) {
-//                        double celsiusTemperature = Double.parseDouble(inputField.getText());
-//                        controller.convertCelsiusToKelvin(celsiusTemperature);
-//                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.CELSIUS) {
-//                        double fahrenheitTemperature = Double.parseDouble(inputField.getText());
-//                        controller.convertFahrenheitToCelsius(fahrenheitTemperature);
-//                    } else if (sourceScale == TemperatureScale.FAHRENHEIT && targetScale == TemperatureScale.KELVIN) {
-//                        double fahrenheitTemperature = Double.parseDouble(inputField.getText());
-//                        controller.convertFahrenheitToKelvin(fahrenheitTemperature);
-//                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.CELSIUS) {
-//                        double kelvinTemperature = Double.parseDouble(inputField.getText());
-//                        controller.convertKelvinToCelsius(kelvinTemperature);
-//                    } else if (sourceScale == TemperatureScale.KELVIN && targetScale == TemperatureScale.FAHRENHEIT) {
-//                        double kelvinTemperature = Double.parseDouble(inputField.getText());
-//                        controller.convertKelvinToFahrenheit(kelvinTemperature);
-//                    }
+                    controller.setInputValue(temperature);
+                    controller.convertTemperature();
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(frame, "The temperature should be a number", "Error", JOptionPane.ERROR_MESSAGE);
                 }

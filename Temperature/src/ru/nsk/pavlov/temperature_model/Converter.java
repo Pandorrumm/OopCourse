@@ -1,13 +1,7 @@
 package ru.nsk.pavlov.temperature_model;
 
 public interface Converter {
-    void convert();
-
-    void setFromScale(TemperatureScale scale);
-
-    void setToScale(TemperatureScale scale);
-
-    void setInputValue(double value);
+    void convert(TemperatureScale fromScale, TemperatureScale toScale, double value);
 
     double getResult();
 

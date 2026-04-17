@@ -5,31 +5,12 @@ import java.util.List;
 
 public class TemperatureConverter implements Converter {
     private final List<ConverterListener> listeners = new ArrayList<>();
-
-    private TemperatureScale fromScale;
-    private TemperatureScale toScale;
-
-    private double inputValue;
     private double resultValue;
 
     @Override
-    public void setFromScale(TemperatureScale scale) {
-        fromScale = scale;
-    }
-
-    @Override
-    public void setToScale(TemperatureScale scale) {
-        toScale = scale;
-    }
-
-    public void setInputValue(double value) {
-        inputValue = value;
-    }
-
-    @Override
-    public void convert() {
+    public void convert(TemperatureScale fromScale, TemperatureScale toScale, double value) {
         if (fromScale != null && toScale != null) {
-            resultValue = fromScale.convertTo(inputValue, toScale);
+            resultValue = fromScale.convertTo(value, toScale);
 
             notifyListeners(toScale);
         }
