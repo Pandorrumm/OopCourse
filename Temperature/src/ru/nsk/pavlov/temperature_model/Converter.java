@@ -1,4 +1,4 @@
-package ru.nsk.pavlov.model;
+package ru.nsk.pavlov.temperature_model;
 
 public interface Converter {
     void convertCelsiusToFahrenheit(double celsiusTemperature);

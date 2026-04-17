@@ -1,10 +1,10 @@
 package ru.nsk.pavlov;
 
-import ru.nsk.pavlov.controller.Controller;
-import ru.nsk.pavlov.model.Converter;
-import ru.nsk.pavlov.model.TemperatureConverter;
-import ru.nsk.pavlov.view.DesktopView;
-import ru.nsk.pavlov.view.View;
+import ru.nsk.pavlov.temperature_controller.Controller;
+import ru.nsk.pavlov.temperature_model.Converter;
+import ru.nsk.pavlov.temperature_model.TemperatureConverter;
+import ru.nsk.pavlov.temperature_view.DesktopView;
+import ru.nsk.pavlov.temperature_view.View;
 
 public class Main {
     public static void main(String[] args) {

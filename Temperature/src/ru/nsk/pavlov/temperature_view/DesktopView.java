@@ -1,13 +1,11 @@
-package ru.nsk.pavlov.view;
+package ru.nsk.pavlov.temperature_view;
 
-import ru.nsk.pavlov.model.TemperatureScale;
-import ru.nsk.pavlov.model.Converter;
-import ru.nsk.pavlov.controller.Controller;
+import ru.nsk.pavlov.temperature_model.TemperatureScale;
+import ru.nsk.pavlov.temperature_model.Converter;
+import ru.nsk.pavlov.temperature_controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class DesktopView implements View {
@@ -76,19 +74,8 @@ public class DesktopView implements View {
             panel.add(centerPanel, BorderLayout.CENTER);
             panel.add(bottomPanel, BorderLayout.SOUTH);
 
-            sourceScaleBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    sourceScale = (TemperatureScale) sourceScaleBox.getSelectedItem();
-                }
-            });
-
-            targetScaleBox.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    targetScale = (TemperatureScale) targetScaleBox.getSelectedItem();
-                }
-            });
+            sourceScaleBox.addActionListener(e -> sourceScale = (TemperatureScale) sourceScaleBox.getSelectedItem());
+            targetScaleBox.addActionListener(e -> targetScale = (TemperatureScale) targetScaleBox.getSelectedItem());
 
             convertButton.addActionListener(actionEvent -> {
                 try {
