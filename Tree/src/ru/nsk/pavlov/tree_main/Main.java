@@ -6,14 +6,15 @@ public class Main {
     public static void main(String[] args) {
         BinarySearchTree<Integer> tree = new BinarySearchTree<>();
 
-        tree.add(10);
         tree.add(50);
+        tree.add(null);
         tree.add(20);
-        tree.add(40);
+        tree.add(null);
         tree.add(15);
         tree.add(5);
         tree.add(100);
-        tree.add(null);
+        tree.add(78);
+        tree.add(25);
 
         System.out.println(tree);
 
@@ -34,7 +35,7 @@ public class Main {
 
         System.out.println();
         System.out.println("Preorder tree depth first search:");
-        tree.preOrderSearchIterative(value -> System.out.println(value + " "));
+        tree.preOrderSearch(value -> System.out.println(value + " "));
 
         System.out.println();
         System.out.println("Breadth first search:");

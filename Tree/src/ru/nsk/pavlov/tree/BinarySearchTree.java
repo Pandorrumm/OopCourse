@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 public class BinarySearchTree<E> {
     private TreeNode<E> root;
     private final Comparator<E> comparator;
+    private int size;
 
     public BinarySearchTree() {
         comparator = null;
@@ -15,7 +16,15 @@ public class BinarySearchTree<E> {
         this.comparator = comparator;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     private int compare(E element1, E element2) {
+        if (comparator != null) {
+            return comparator.compare(element1, element2);
+        }
+
         if (element1 == null && element2 == null) {
             return 0;
         }
@@ -28,15 +37,9 @@ public class BinarySearchTree<E> {
             return 1;
         }
 
-        if (comparator != null) {
-            return comparator.compare(element1, element2);
-        }
-
         //noinspection unchecked
         return ((Comparable<E>) element1).compareTo(element2);
     }
-
-    private int size;
 
     public void add(E element) {
         if (root == null) {
@@ -57,7 +60,9 @@ public class BinarySearchTree<E> {
 
             if (comparisonResult == 0) {
                 return;
-            } else if (comparisonResult < 0) {
+            }
+
+            if (comparisonResult < 0) {
                 currentNode = currentNode.getLeft();
             } else {
                 currentNode = currentNode.getRight();
@@ -155,11 +160,7 @@ public class BinarySearchTree<E> {
         }
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public void preOrderSearch(Consumer<E> action) {
+    public void preOrderSearchRecursive(Consumer<E> action) {
         preOrderSearchRecursive(root, action);
     }
 
@@ -174,7 +175,7 @@ public class BinarySearchTree<E> {
         preOrderSearchRecursive(node.getRight(), consumer);
     }
 
-    public void preOrderSearchIterative(Consumer<E> consumer) {
+    public void preOrderSearch(Consumer<E> consumer) {
         if (root == null) {
             return;
         }
@@ -205,15 +206,15 @@ public class BinarySearchTree<E> {
         queue.offer(root);
 
         while (!queue.isEmpty()) {
-            TreeNode<E> current = queue.remove();
-            consumer.accept(current.getData());
+            TreeNode<E> currentNode = queue.remove();
+            consumer.accept(currentNode.getData());
 
-            if (current.getLeft() != null) {
-                queue.offer(current.getLeft());
+            if (currentNode.getLeft() != null) {
+                queue.offer(currentNode.getLeft());
             }
 
-            if (current.getRight() != null) {
-                queue.offer(current.getRight());
+            if (currentNode.getRight() != null) {
+                queue.offer(currentNode.getRight());
             }
         }
     }
@@ -223,7 +224,7 @@ public class BinarySearchTree<E> {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        preOrderSearch(element -> stringBuilder.append(element).append(", "));
+        preOrderSearchRecursive(element -> stringBuilder.append(element).append(", "));
 
         if (stringBuilder.length() > 1) {
             stringBuilder.setLength(stringBuilder.length() - 2);
