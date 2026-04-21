@@ -6,7 +6,6 @@ import ru.nsk.pavlov.temperature.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.List;
 
@@ -14,16 +13,21 @@ public class DesktopView implements View {
     private final Converter converter;
     private Controller controller;
     private JTextField resultLabel;
-    private final List<TemperatureScale> availableScales;
+    private List<TemperatureScale> availableScales;
+    private boolean isStarted;
 
     public DesktopView(Converter converter, List<TemperatureScale> availableScales) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
-
-        this.availableScales = new ArrayList<>(availableScales);
     }
 
     @Override
     public void start() {
+        if (isStarted) {
+            throw new IllegalStateException("View has already been started. Cannot start again.");
+        }
+
+        isStarted = true;
+
         if (controller == null) {
             throw new IllegalArgumentException("The controller is null");
         }
@@ -43,6 +47,8 @@ public class DesktopView implements View {
             JPanel fromPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             fromPanel.add(new JLabel("From: "));
             JComboBox<String> sourceScaleBox = new JComboBox<>();
+
+            availableScales = converter.getAvailableScales();
 
             for (TemperatureScale availableScale : availableScales) {
                 sourceScaleBox.addItem(availableScale.getName());

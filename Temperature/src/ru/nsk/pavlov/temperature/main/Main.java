@@ -20,7 +20,7 @@ public class Main {
                 new KelvinScale()
         );
 
-        Converter converter = new TemperatureConverter();
+        Converter converter = new TemperatureConverter(scales);
         View view = new DesktopView(converter, scales);
         Controller controller = new Controller(converter, view);
         controller.start();
