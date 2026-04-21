@@ -1,7 +1,6 @@
 package ru.nsk.pavlov.temperature.model.scales;
 
 public class KelvinScale implements TemperatureScale {
-
     @Override
     public String getName() {
         return "Kelvin";

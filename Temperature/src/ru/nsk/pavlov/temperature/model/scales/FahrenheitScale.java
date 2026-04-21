@@ -1,7 +1,6 @@
 package ru.nsk.pavlov.temperature.model.scales;
 
 public class FahrenheitScale implements TemperatureScale {
-
     @Override
     public String getName() {
         return "Fahrenheit";
