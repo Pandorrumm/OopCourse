@@ -58,10 +58,6 @@ public class BinarySearchTree<E> {
             parent = currentNode;
             comparisonResult = compare(element, currentNode.getData());
 
-            if (comparisonResult == 0) {
-                return;
-            }
-
             if (comparisonResult < 0) {
                 currentNode = currentNode.getLeft();
             } else {
