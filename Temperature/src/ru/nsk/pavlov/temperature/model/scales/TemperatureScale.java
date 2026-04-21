@@ -1,4 +1,4 @@
-package ru.nsk.pavlov.temperature_model;
+package ru.nsk.pavlov.temperature.model.scales;
 
 public interface TemperatureScale {
     String getName();

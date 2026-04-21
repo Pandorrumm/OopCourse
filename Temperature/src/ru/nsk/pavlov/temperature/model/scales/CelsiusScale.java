@@ -1,10 +1,10 @@
-package ru.nsk.pavlov.temperature_model;
+package ru.nsk.pavlov.temperature.model.scales;
 
-public class KelvinScale implements TemperatureScale {
+public class CelsiusScale implements TemperatureScale {
 
     @Override
     public String getName() {
-        return "Kelvin";
+        return "Celsius";
     }
 
     @Override
@@ -12,8 +12,8 @@ public class KelvinScale implements TemperatureScale {
         String targetScaleName = targetScale.getName();
 
         return switch (targetScaleName) {
-            case "Celsius" -> temperature - 273.15;
-            case "Fahrenheit" -> (temperature - 273.15) * 9.0 / 5.0 + 32;
+            case "Fahrenheit" -> temperature * 9.0 / 5.0 + 32;
+            case "Kelvin" -> temperature + 273.15;
             default -> temperature;
         };
     }

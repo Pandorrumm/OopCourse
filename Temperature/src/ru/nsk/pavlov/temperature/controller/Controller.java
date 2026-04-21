@@ -1,8 +1,8 @@
-package ru.nsk.pavlov.temperature_controller;
+package ru.nsk.pavlov.temperature.controller;
 
-import ru.nsk.pavlov.temperature_model.Converter;
-import ru.nsk.pavlov.temperature_model.TemperatureScale;
-import ru.nsk.pavlov.temperature_view.View;
+import ru.nsk.pavlov.temperature.model.Converter;
+import ru.nsk.pavlov.temperature.model.scales.TemperatureScale;
+import ru.nsk.pavlov.temperature.view.View;
 
 import java.util.Objects;
 
