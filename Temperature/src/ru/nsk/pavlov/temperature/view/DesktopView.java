@@ -134,9 +134,9 @@ public class DesktopView implements View {
         });
     }
 
-    public TemperatureScale getScaleByName(String nameScale) {
+    public TemperatureScale getScaleByName(String scaleName) {
         for (TemperatureScale scale : availableScales) {
-            if (scale.getName().equals(nameScale)) {
+            if (scale.getName().equals(scaleName)) {
                 return scale;
             }
         }

@@ -44,6 +44,10 @@ public class TemperatureConverter implements Converter {
 
     @Override
     public void addConverterListener(ConverterListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("ConverterListener cannot be null");
+        }
+
         listeners.add(listener);
     }
 
