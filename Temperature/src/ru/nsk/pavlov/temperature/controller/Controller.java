@@ -35,8 +35,8 @@ public class Controller {
         toScale = scale;
     }
 
-    public void setInputValue(double value) {
-        inputValue = value;
+    public void setInputValue(double inputValue) {
+        this.inputValue = inputValue;
     }
 
     public void convertTemperature() {

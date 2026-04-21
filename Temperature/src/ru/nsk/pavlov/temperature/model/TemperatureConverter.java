@@ -10,9 +10,9 @@ public class TemperatureConverter implements Converter {
     private double resultValue;
 
     @Override
-    public void convert(TemperatureScale fromScale, TemperatureScale toScale, double value) {
+    public void convert(TemperatureScale fromScale, TemperatureScale toScale, double temperature) {
         if (fromScale != null && toScale != null) {
-            resultValue = fromScale.convertTo(value, toScale);
+            resultValue = fromScale.convertTo(temperature, toScale);
 
             notifyListeners(toScale);
         }
