@@ -156,22 +156,28 @@ public class BinarySearchTree<E> {
         }
     }
 
-    public void preOrderSearchRecursive(Consumer<E> action) {
-        preOrderSearchRecursive(root, action);
+    public void depthFirstSearchPreOrderRecursive(Consumer<E> consumer) {
+        Objects.requireNonNull(consumer, "Consumer cannot be null");
+
+        depthFirstSearchPreOrderRecursive(root, consumer);
     }
 
-    private void preOrderSearchRecursive(TreeNode<E> node, Consumer<E> consumer) {
+    private void depthFirstSearchPreOrderRecursive(TreeNode<E> node, Consumer<E> consumer) {
+        Objects.requireNonNull(consumer, "Consumer cannot be null");
+
         if (node == null) {
             return;
         }
 
         consumer.accept(node.getData());
 
-        preOrderSearchRecursive(node.getLeft(), consumer);
-        preOrderSearchRecursive(node.getRight(), consumer);
+        depthFirstSearchPreOrderRecursive(node.getLeft(), consumer);
+        depthFirstSearchPreOrderRecursive(node.getRight(), consumer);
     }
 
-    public void preOrderSearch(Consumer<E> consumer) {
+    public void depthFirstSearchPreOrder(Consumer<E> consumer) {
+        Objects.requireNonNull(consumer, "Consumer cannot be null");
+
         if (root == null) {
             return;
         }
@@ -180,20 +186,22 @@ public class BinarySearchTree<E> {
         stack.push(root);
 
         while (!stack.isEmpty()) {
-            TreeNode<E> current = stack.pop();
-            consumer.accept(current.getData());
+            TreeNode<E> currentNode = stack.pop();
+            consumer.accept(currentNode.getData());
 
-            if (current.getRight() != null) {
-                stack.push(current.getRight());
+            if (currentNode.getRight() != null) {
+                stack.push(currentNode.getRight());
             }
 
-            if (current.getLeft() != null) {
-                stack.push(current.getLeft());
+            if (currentNode.getLeft() != null) {
+                stack.push(currentNode.getLeft());
             }
         }
     }
 
     public void breadthFirstSearch(Consumer<E> consumer) {
+        Objects.requireNonNull(consumer, "Consumer cannot be null");
+
         if (root == null) {
             return;
         }
@@ -220,7 +228,7 @@ public class BinarySearchTree<E> {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        preOrderSearchRecursive(element -> stringBuilder.append(element).append(", "));
+        depthFirstSearchPreOrderRecursive(element -> stringBuilder.append(element).append(", "));
 
         if (stringBuilder.length() > 1) {
             stringBuilder.setLength(stringBuilder.length() - 2);
