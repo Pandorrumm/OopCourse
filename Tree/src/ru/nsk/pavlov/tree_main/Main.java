@@ -31,11 +31,11 @@ public class Main {
 
         System.out.println();
         System.out.println("Preorder tree depth first search with recursion:");
-        tree.preOrderSearch(value -> System.out.println(value + " "));
+        tree.depthFirstSearchPreOrderRecursive(value -> System.out.println(value + " "));
 
         System.out.println();
         System.out.println("Preorder tree depth first search:");
-        tree.preOrderSearch(value -> System.out.println(value + " "));
+        tree.depthFirstSearchPreOrderRecursive(value -> System.out.println(value + " "));
 
         System.out.println();
         System.out.println("Breadth first search:");
