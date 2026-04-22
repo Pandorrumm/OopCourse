@@ -30,11 +30,21 @@ public class TemperatureConverter implements Converter {
 
     @Override
     public void convert(TemperatureScale fromScale, TemperatureScale toScale, double temperature) {
-        if (fromScale != null && toScale != null) {
-            resultValue = fromScale.convertTo(temperature, toScale);
-
-            notifyListeners(toScale);
+        if (fromScale == null) {
+            throw new IllegalArgumentException("FromScale cannot be null");
         }
+
+        if (toScale == null) {
+            throw new IllegalArgumentException("ToScale cannot be null");
+        }
+
+        if (Double.isNaN(temperature)) {
+            throw new IllegalArgumentException("The temperature should be a number");
+        }
+
+        resultValue = fromScale.convertTo(temperature, toScale);
+
+        notifyListeners(toScale);
     }
 
     @Override
