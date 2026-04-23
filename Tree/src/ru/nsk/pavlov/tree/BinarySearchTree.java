@@ -163,8 +163,6 @@ public class BinarySearchTree<E> {
     }
 
     private void depthFirstSearchPreOrderRecursive(TreeNode<E> node, Consumer<E> consumer) {
-        Objects.requireNonNull(consumer, "Consumer cannot be null");
-
         if (node == null) {
             return;
         }
@@ -228,7 +226,7 @@ public class BinarySearchTree<E> {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append('[');
 
-        depthFirstSearchPreOrderRecursive(element -> stringBuilder.append(element).append(", "));
+        depthFirstSearchPreOrder(element -> stringBuilder.append(element).append(", "));
 
         if (stringBuilder.length() > 1) {
             stringBuilder.setLength(stringBuilder.length() - 2);
