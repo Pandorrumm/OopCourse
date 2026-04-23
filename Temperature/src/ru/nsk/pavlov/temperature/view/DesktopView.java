@@ -16,7 +16,7 @@ public class DesktopView implements View {
     private List<TemperatureScale> availableScales;
     private boolean isStarted;
 
-    public DesktopView(Converter converter, List<TemperatureScale> availableScales) {
+    public DesktopView(Converter converter) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
     }
 

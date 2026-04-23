@@ -21,7 +21,7 @@ public class Main {
         );
 
         Converter converter = new TemperatureConverter(scales);
-        View view = new DesktopView(converter, scales);
+        View view = new DesktopView(converter);
         Controller controller = new Controller(converter, view);
         controller.start();
     }

@@ -7,13 +7,12 @@ public class CelsiusScale implements TemperatureScale {
     }
 
     @Override
-    public double convertTo(double temperature, TemperatureScale targetScale) {
-        String targetScaleName = targetScale.getName();
+    public double toCelsiusScale(double temperature) {
+        return temperature;
+    }
 
-        return switch (targetScaleName) {
-            case "Fahrenheit" -> temperature * 9.0 / 5.0 + 32;
-            case "Kelvin" -> temperature + 273.15;
-            default -> temperature;
-        };
+    @Override
+    public double fromCelsiusScale(double celsiusTemperature) {
+        return celsiusTemperature;
     }
 }

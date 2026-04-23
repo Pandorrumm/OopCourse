@@ -42,7 +42,8 @@ public class TemperatureConverter implements Converter {
             throw new IllegalArgumentException("The temperature should be a number");
         }
 
-        resultValue = fromScale.convertTo(temperature, toScale);
+        double celsiusTemperature = fromScale.toCelsiusScale(temperature);
+        resultValue = toScale.fromCelsiusScale(celsiusTemperature);
 
         notifyListeners(toScale);
     }
