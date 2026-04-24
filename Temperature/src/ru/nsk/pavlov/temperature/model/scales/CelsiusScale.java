@@ -2,11 +2,6 @@ package ru.nsk.pavlov.temperature.model.scales;
 
 public class CelsiusScale implements TemperatureScale {
     @Override
-    public String getName() {
-        return "Celsius";
-    }
-
-    @Override
     public double convertToCelsiusScale(double temperature) {
         return temperature;
     }
@@ -14,5 +9,10 @@ public class CelsiusScale implements TemperatureScale {
     @Override
     public double convertFromCelsiusScale(double celsiusTemperature) {
         return celsiusTemperature;
+    }
+
+    @Override
+    public String toString(){
+        return "Celsius";
     }
 }

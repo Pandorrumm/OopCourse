@@ -47,28 +47,34 @@ public class DesktopView implements View {
 
             availableScales = converter.getAvailableScales();
 
-            JComboBox<String> sourceScaleBox = new JComboBox<>();
+            JComboBox<TemperatureScale> sourceScaleBox = new JComboBox<>();
 
             for (TemperatureScale availableScale : availableScales) {
-                sourceScaleBox.addItem(availableScale.getName());
+                sourceScaleBox.addItem(availableScale);
             }
 
-            controller.setFromScale(getScaleByName((String) sourceScaleBox.getSelectedItem()));
-
             sourceScaleBox.setPreferredSize(new Dimension(120, 25));
+
+            if (sourceScaleBox.getItemCount() > 0) {
+                controller.setFromScale(sourceScaleBox.getItemAt(0));
+            }
+
             fromPanel.add(sourceScaleBox);
 
             JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             toPanel.add(new JLabel("To: "));
-            JComboBox<String> targetScaleBox = new JComboBox<>();
+            JComboBox<TemperatureScale> targetScaleBox = new JComboBox<>();
 
             for (TemperatureScale availableScale : availableScales) {
-                targetScaleBox.addItem(availableScale.getName());
+                targetScaleBox.addItem(availableScale);
             }
 
-            controller.setToScale(getScaleByName((String) targetScaleBox.getSelectedItem()));
-
             targetScaleBox.setPreferredSize(new Dimension(120, 25));
+
+            if (targetScaleBox.getItemCount() > 0) {
+                controller.setToScale(targetScaleBox.getItemAt(0));
+            }
+
             toPanel.add(targetScaleBox);
 
             topPanel.add(fromPanel);
@@ -97,9 +103,7 @@ public class DesktopView implements View {
             panel.add(bottomPanel, BorderLayout.SOUTH);
 
             sourceScaleBox.addActionListener(e -> {
-                String selectedScale = (String) sourceScaleBox.getSelectedItem();
-
-                TemperatureScale temperatureScale = getScaleByName(selectedScale);
+                TemperatureScale temperatureScale = (TemperatureScale) sourceScaleBox.getSelectedItem();
 
                 if (temperatureScale != null) {
                     controller.setFromScale(temperatureScale);
@@ -107,9 +111,7 @@ public class DesktopView implements View {
             });
 
             targetScaleBox.addActionListener(e -> {
-                String selectedScale = (String) targetScaleBox.getSelectedItem();
-
-                TemperatureScale temperatureScale = getScaleByName(selectedScale);
+                TemperatureScale temperatureScale = (TemperatureScale) targetScaleBox.getSelectedItem();
 
                 if (temperatureScale != null) {
                     controller.setToScale(temperatureScale);
@@ -131,16 +133,6 @@ public class DesktopView implements View {
             frame.setResizable(false);
             frame.setVisible(true);
         });
-    }
-
-    public TemperatureScale getScaleByName(String scaleName) {
-        for (TemperatureScale scale : availableScales) {
-            if (scale.getName().equals(scaleName)) {
-                return scale;
-            }
-        }
-
-        return null;
     }
 
     @Override

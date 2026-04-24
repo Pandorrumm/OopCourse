@@ -29,7 +29,7 @@ public class TemperatureConverter implements Converter {
     }
 
     public List<TemperatureScale> getAvailableScales() {
-        return availableScales;
+        return new ArrayList<>(availableScales);
     }
 
     @Override
