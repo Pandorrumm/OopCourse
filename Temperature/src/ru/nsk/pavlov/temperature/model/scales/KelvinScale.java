@@ -7,12 +7,12 @@ public class KelvinScale implements TemperatureScale {
     }
 
     @Override
-    public double toCelsiusScale(double temperature) {
+    public double convertToCelsiusScale(double temperature) {
         return temperature - 273.15;
     }
 
     @Override
-    public double fromCelsiusScale(double celsiusTemperature) {
+    public double convertFromCelsiusScale(double celsiusTemperature) {
         return celsiusTemperature + 273.15;
     }
 }

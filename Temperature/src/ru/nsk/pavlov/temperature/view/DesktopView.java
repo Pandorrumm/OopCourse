@@ -28,9 +28,7 @@ public class DesktopView implements View {
 
         isStarted = true;
 
-        if (controller == null) {
-            throw new IllegalArgumentException("The controller is null");
-        }
+        Objects.requireNonNull(controller, "Controller cannot be null");
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Temperature Converter");
@@ -46,9 +44,10 @@ public class DesktopView implements View {
 
             JPanel fromPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             fromPanel.add(new JLabel("From: "));
-            JComboBox<String> sourceScaleBox = new JComboBox<>();
 
             availableScales = converter.getAvailableScales();
+
+            JComboBox<String> sourceScaleBox = new JComboBox<>();
 
             for (TemperatureScale availableScale : availableScales) {
                 sourceScaleBox.addItem(availableScale.getName());

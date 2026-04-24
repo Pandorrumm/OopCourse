@@ -3,7 +3,7 @@ package ru.nsk.pavlov.temperature.model.scales;
 public interface TemperatureScale {
     String getName();
 
-    double toCelsiusScale(double temperature);
+    double convertToCelsiusScale(double temperature);
 
-    double fromCelsiusScale(double celsiusTemperature);
+    double convertFromCelsiusScale(double celsiusTemperature);
 }

@@ -11,8 +11,12 @@ public class TemperatureConverter implements Converter {
     private double resultValue;
 
     public TemperatureConverter(List<TemperatureScale> availableScales) {
-        if (availableScales == null || availableScales.isEmpty()) {
-            throw new IllegalArgumentException("Available scales cannot be null");
+        if (availableScales == null) {
+            throw new NullPointerException("Available scales cannot be null");
+        }
+
+        if (availableScales.isEmpty()) {
+            throw new IllegalArgumentException("Available scales cannot be empty");
         }
 
         for (int i = 0; i < availableScales.size(); i++) {
@@ -31,19 +35,19 @@ public class TemperatureConverter implements Converter {
     @Override
     public void convert(TemperatureScale fromScale, TemperatureScale toScale, double temperature) {
         if (fromScale == null) {
-            throw new IllegalArgumentException("FromScale cannot be null");
+            throw new NullPointerException("FromScale cannot be null");
         }
 
         if (toScale == null) {
-            throw new IllegalArgumentException("ToScale cannot be null");
+            throw new NullPointerException("ToScale cannot be null");
         }
 
         if (Double.isNaN(temperature)) {
             throw new IllegalArgumentException("The temperature should be a number");
         }
 
-        double celsiusTemperature = fromScale.toCelsiusScale(temperature);
-        resultValue = toScale.fromCelsiusScale(celsiusTemperature);
+        double celsiusTemperature = fromScale.convertToCelsiusScale(temperature);
+        resultValue = toScale.convertFromCelsiusScale(celsiusTemperature);
 
         notifyListeners(toScale);
     }
@@ -56,7 +60,7 @@ public class TemperatureConverter implements Converter {
     @Override
     public void addConverterListener(ConverterListener listener) {
         if (listener == null) {
-            throw new IllegalArgumentException("ConverterListener cannot be null");
+            throw new NullPointerException("ConverterListener cannot be null");
         }
 
         listeners.add(listener);
