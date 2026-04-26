@@ -47,35 +47,31 @@ public class DesktopView implements View {
 
             availableScales = converter.getAvailableScales();
 
-            JComboBox<TemperatureScale> sourceScaleBox = new JComboBox<>();
+            JComboBox<TemperatureScale> fromScaleComboBox = new JComboBox<>();
 
             for (TemperatureScale availableScale : availableScales) {
-                sourceScaleBox.addItem(availableScale);
+                fromScaleComboBox.addItem(availableScale);
             }
 
-            sourceScaleBox.setPreferredSize(new Dimension(120, 25));
+            fromScaleComboBox.setPreferredSize(new Dimension(120, 25));
 
-            if (sourceScaleBox.getItemCount() > 0) {
-                controller.setFromScale(sourceScaleBox.getItemAt(0));
-            }
+            controller.setFromScale(fromScaleComboBox.getItemAt(0));
 
-            fromPanel.add(sourceScaleBox);
+            fromPanel.add(fromScaleComboBox);
 
             JPanel toPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
             toPanel.add(new JLabel("To: "));
-            JComboBox<TemperatureScale> targetScaleBox = new JComboBox<>();
+            JComboBox<TemperatureScale> toScaleComboBox = new JComboBox<>();
 
             for (TemperatureScale availableScale : availableScales) {
-                targetScaleBox.addItem(availableScale);
+                toScaleComboBox.addItem(availableScale);
             }
 
-            targetScaleBox.setPreferredSize(new Dimension(120, 25));
+            toScaleComboBox.setPreferredSize(new Dimension(120, 25));
 
-            if (targetScaleBox.getItemCount() > 0) {
-                controller.setToScale(targetScaleBox.getItemAt(0));
-            }
+            controller.setToScale(toScaleComboBox.getItemAt(0));
 
-            toPanel.add(targetScaleBox);
+            toPanel.add(toScaleComboBox);
 
             topPanel.add(fromPanel);
             topPanel.add(toPanel);
@@ -102,20 +98,16 @@ public class DesktopView implements View {
             panel.add(centerPanel, BorderLayout.CENTER);
             panel.add(bottomPanel, BorderLayout.SOUTH);
 
-            sourceScaleBox.addActionListener(e -> {
-                TemperatureScale temperatureScale = (TemperatureScale) sourceScaleBox.getSelectedItem();
+            fromScaleComboBox.addActionListener(e -> {
+                TemperatureScale temperatureScale = (TemperatureScale) fromScaleComboBox.getSelectedItem();
 
-                if (temperatureScale != null) {
-                    controller.setFromScale(temperatureScale);
-                }
+                controller.setFromScale(temperatureScale);
             });
 
-            targetScaleBox.addActionListener(e -> {
-                TemperatureScale temperatureScale = (TemperatureScale) targetScaleBox.getSelectedItem();
+            toScaleComboBox.addActionListener(e -> {
+                TemperatureScale temperatureScale = (TemperatureScale) toScaleComboBox.getSelectedItem();
 
-                if (temperatureScale != null) {
-                    controller.setToScale(temperatureScale);
-                }
+                controller.setToScale(temperatureScale);
             });
 
             convertButton.addActionListener(actionEvent -> {

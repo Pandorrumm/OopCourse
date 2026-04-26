@@ -4,6 +4,7 @@ import ru.nsk.pavlov.temperature.model.scales.TemperatureScale;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TemperatureConverter implements Converter {
     private final List<ConverterListener> listeners = new ArrayList<>();
@@ -11,9 +12,7 @@ public class TemperatureConverter implements Converter {
     private double resultValue;
 
     public TemperatureConverter(List<TemperatureScale> availableScales) {
-        if (availableScales == null) {
-            throw new NullPointerException("Available scales cannot be null");
-        }
+        Objects.requireNonNull(availableScales, "Available scales cannot be null");
 
         if (availableScales.isEmpty()) {
             throw new IllegalArgumentException("Available scales cannot be empty");
@@ -34,13 +33,8 @@ public class TemperatureConverter implements Converter {
 
     @Override
     public void convert(TemperatureScale fromScale, TemperatureScale toScale, double temperature) {
-        if (fromScale == null) {
-            throw new NullPointerException("FromScale cannot be null");
-        }
-
-        if (toScale == null) {
-            throw new NullPointerException("ToScale cannot be null");
-        }
+        Objects.requireNonNull(fromScale, "FromScale cannot be null");
+        Objects.requireNonNull(toScale, "ToScale cannot be null");
 
         if (Double.isNaN(temperature)) {
             throw new IllegalArgumentException("The temperature should be a number");
@@ -59,9 +53,7 @@ public class TemperatureConverter implements Converter {
 
     @Override
     public void addConverterListener(ConverterListener listener) {
-        if (listener == null) {
-            throw new NullPointerException("ConverterListener cannot be null");
-        }
+        Objects.requireNonNull(listener, "ConverterListener cannot be null");
 
         listeners.add(listener);
     }

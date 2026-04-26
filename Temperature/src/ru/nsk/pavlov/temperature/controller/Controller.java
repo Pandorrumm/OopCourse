@@ -28,11 +28,11 @@ public class Controller {
     }
 
     public void setFromScale(TemperatureScale scale) {
-        fromScale = scale;
+        fromScale = Objects.requireNonNull(scale, "From scale cannot be null");
     }
 
     public void setToScale(TemperatureScale scale) {
-        toScale = scale;
+        toScale = Objects.requireNonNull(scale, "To scale cannot be null");
     }
 
     public void setInputValue(double inputValue) {
