@@ -114,7 +114,7 @@ public class DesktopView implements View {
                 try {
                     double temperature = Double.parseDouble(inputField.getText());
 
-                    controller.setInputValue(temperature);
+                    controller.setInputTemperature(temperature);
                     controller.convertTemperature();
                 } catch (NumberFormatException e) {
                     JOptionPane.showMessageDialog(frame, "The temperature should be a number", "Error", JOptionPane.ERROR_MESSAGE);
@@ -134,6 +134,6 @@ public class DesktopView implements View {
 
     @Override
     public void temperatureConverted(TemperatureScale temperatureScale) {
-        resultLabel.setText(String.format("%.2f", converter.getResult()));
+        resultLabel.setText(String.format("%.2f", converter.getConvertedTemperature()));
     }
 }

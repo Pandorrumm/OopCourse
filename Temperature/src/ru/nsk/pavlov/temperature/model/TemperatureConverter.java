@@ -9,7 +9,7 @@ import java.util.Objects;
 public class TemperatureConverter implements Converter {
     private final List<ConverterListener> listeners = new ArrayList<>();
     private final List<TemperatureScale> availableScales;
-    private double resultValue;
+    private double convertedTemperature;
 
     public TemperatureConverter(List<TemperatureScale> availableScales) {
         Objects.requireNonNull(availableScales, "Available scales cannot be null");
@@ -41,14 +41,14 @@ public class TemperatureConverter implements Converter {
         }
 
         double celsiusTemperature = fromScale.convertToCelsiusScale(temperature);
-        resultValue = toScale.convertFromCelsiusScale(celsiusTemperature);
+        convertedTemperature = toScale.convertFromCelsiusScale(celsiusTemperature);
 
         notifyListeners(toScale);
     }
 
     @Override
-    public double getResult() {
-        return resultValue;
+    public double getConvertedTemperature() {
+        return convertedTemperature;
     }
 
     @Override

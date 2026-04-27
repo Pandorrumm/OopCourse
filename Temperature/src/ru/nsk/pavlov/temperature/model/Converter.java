@@ -7,7 +7,7 @@ import java.util.List;
 public interface Converter {
     void convert(TemperatureScale fromScale, TemperatureScale toScale, double temperature);
 
-    double getResult();
+    double getConvertedTemperature();
 
     void addConverterListener(ConverterListener listener);
 

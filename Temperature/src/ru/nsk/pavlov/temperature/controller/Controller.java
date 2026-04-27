@@ -13,7 +13,7 @@ public class Controller {
     private TemperatureScale fromScale;
     private TemperatureScale toScale;
 
-    private double inputValue;
+    private double inputTemperature;
 
     public Controller(Converter converter, View view) {
         this.converter = Objects.requireNonNull(converter, "Converter cannot be null");
@@ -35,11 +35,11 @@ public class Controller {
         toScale = Objects.requireNonNull(scale, "To scale cannot be null");
     }
 
-    public void setInputValue(double inputValue) {
-        this.inputValue = inputValue;
+    public void setInputTemperature(double inputTemperature) {
+        this.inputTemperature = inputTemperature;
     }
 
     public void convertTemperature() {
-        converter.convert(fromScale, toScale, inputValue);
+        converter.convert(fromScale, toScale, inputTemperature);
     }
 }
